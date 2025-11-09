@@ -40,6 +40,7 @@ public:
     Q_INVOKABLE void volumeDown(const QString &serial);
     Q_INVOKABLE void textInput(const QString &serial, const QString &text);
     Q_INVOKABLE void pushFile(const QString &serial, const QString &file, const QString &devicePath = QString());
+    Q_INVOKABLE void pushFile(const QString &serial, const QString &file, const QString &devicePath, const QString &adbDeviceAddress);
     Q_INVOKABLE void installApk(const QString &serial, const QString &apkFile);
     Q_INVOKABLE void installApk(const QString &serial, const QString &apkFile, const QString &adbDeviceAddress);
     Q_INVOKABLE void installXapk(const QString &serial, const QString &xapkFile);
@@ -113,6 +114,10 @@ private:
     void verifyAdbConnection(const QString &serial, const QString &adbDeviceAddress, const QString &apkFile);
     void startApkInstallationAfterConnect(const QString &serial, const QString &adbDeviceAddress, const QString &absoluteApkPath);
     void connectXapkAdbWithRetry(const QString &serial, const QString &adbDeviceAddress, const QString &xapkFile, QPointer<qsc::IDevice> dev, int retryCount = 0);
+    // 文件推送的ADB连接相关方法
+    void connectAdbForPushFileWithRetry(const QString &serial, const QString &adbDeviceAddress, const QString &filePath, const QString &devicePath, int retryCount = 0);
+    void verifyAdbConnectionForPushFile(const QString &serial, const QString &adbDeviceAddress, const QString &filePath, const QString &devicePath);
+    void startPushFileAfterConnect(const QString &serial, const QString &adbDeviceAddress, const QString &absoluteFilePath, const QString &devicePath);
     
     // Allow ScrcpyObserver to access manager
     friend class ScrcpyObserver;

@@ -764,139 +764,141 @@
 <context>
     <name>CreateCloudPhonePopup</name>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="58"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="59"/>
         <source>Google DNS(8.8.8.8)</source>
         <translation>Google DNS(8.8.8.8)</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="58"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="59"/>
         <source>自定义 DNS</source>
         <translation>กำหนดค่า DNS เอง</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="78"/>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="1393"/>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="1435"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="79"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="1640"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="1682"/>
         <source>镜像上传中...</source>
         <oldsource>下载中...</oldsource>
         <translation>กำลังอัพโหลดอิมเมจ...</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="85"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="86"/>
         <source>镜像加载中...</source>
         <oldsource>加载中...</oldsource>
         <translation>กำลังโหลดภาพ...</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="114"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="116"/>
         <source>创建中...</source>
         <translation>กำลังสร้าง...</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="116"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="118"/>
         <source>创建失败...</source>
         <translation>สร้างล้มเหลว...</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="121"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="123"/>
         <source>镜像加载成功</source>
         <oldsource>创建成功</oldsource>
         <translation>ภาพถูกโหลดสำเร็จ</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="393"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="494"/>
         <source>长度限制：2-11字符</source>
         <translation>ข้อจำกัดความยาว: 2-11 อักขระ</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="397"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="498"/>
         <source>支持字符：[a-zA-Z0-9_.-]</source>
         <translation>รองรับตัวอักษร: [a-zA-Z0-9_.-]</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="401"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="502"/>
         <source>首字符和尾字符必须为[a-zA-Z0-9]</source>
         <translation>อักขระตัวแรกและตัวสุดท้ายต้องเป็น [a-zA-Z0-9]</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="435"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="536"/>
         <source>存储空间不足，请插入SSD固态盘之后进行操作！</source>
         <oldsource>存储空间不足：MMC 与 SSD 都小于 32G，无法执行该操作</oldsource>
         <translation>พื้นที่จัดเก็บไม่เพียงพอ กรุณาเสียบ SSD แล้วดำเนินการต่อ</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="455"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="556"/>
         <source>当前主机可同时运行的云机上限为 %1 台，已有 %2 台正在运行。</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="457"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="558"/>
         <source>系统将自动启动其中 %1 台，其余 %2 台将创建完成后保持关机状态。</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="459"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="560"/>
         <source>系统将自动启动所有 %1 台。</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="461"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="562"/>
         <source>所有 %1 台将创建完成后保持关机状态。</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="505"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="611"/>
         <source>创建云机（不限创建总数）</source>
         <oldsource>创建云机</oldsource>
         <translation type="unfinished">สร้างเครื่องบนคลาวด์</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="530"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="636"/>
         <source>主机地址：%1 （同时运行上限 %2 台）</source>
         <oldsource>主机地址：%1 （可创建上限%2台, 当前可创建%3台）</oldsource>
         <translation type="unfinished">ที่อยู่โฮสต์: %1 (สามารถสร้างได้สูงสุด %2 เครื่อง, ปัจจุบันสามารถสร้างได้ %3 เครื่อง)</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="545"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="651"/>
         <source>前往镜像管理</source>
         <oldsource>更多镜像</oldsource>
         <translation>ไปยังการจัดการภาพ</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="604"/>
         <source>品牌型号</source>
-        <translation>ยี่ห้อและรุ่น</translation>
+        <translation type="vanished">ยี่ห้อและรุ่น</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="617"/>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="754"/>
         <source>默认机型请在 &quot;设置&quot; - &quot;机型设置&quot; 中进行操作</source>
         <oldsource>默认机型请在 &quot;设置&quot; - &quot;模板设置&quot; 中进行操作</oldsource>
-        <translation>รุ่นมาตรฐาน โปรดดำเนินการใน &quot;การตั้งค่า&quot; - &quot;การตั้งค่ารุ่น&quot;</translation>
+        <translation type="vanished">รุ่นมาตรฐาน โปรดดำเนินการใน &quot;การตั้งค่า&quot; - &quot;การตั้งค่ารุ่น&quot;</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="741"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="898"/>
         <source>局域网IP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="856"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="911"/>
+        <source>拥有局域网内的独立IP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="1014"/>
         <source>自动启动</source>
         <oldsource>创建后立即启动云机</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="1027"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="1187"/>
         <source>找不到对应的 ADI 文件路径</source>
         <translation>ไม่พบเส้นทางไฟล์ ADI ที่ตรงกัน</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="1053"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="1215"/>
         <source>找不到默认模板的 ADI 文件路径</source>
         <translation>ไม่พบเส้นทางไฟล์ ADI ของเทมเพลตเริ่มต้น</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="1457"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="1704"/>
         <source>ADI 导入中...</source>
         <translation>กำลังนำเข้า ADI...</translation>
     </message>
@@ -905,73 +907,72 @@
         <translation type="vanished">เลือกเวอร์ชัน Android</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="536"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="642"/>
         <source>选择镜像</source>
         <translation>เลือกภาพ</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="798"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="956"/>
         <source>云机名称</source>
         <translation>ชื่อเครื่องบนคลาวด์</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="798"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="956"/>
         <source>云机名称前缀</source>
         <translation>ชื่อเรียกนำหน้าของเครื่องบนคลาวด์</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="805"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="963"/>
         <source>请输入云机名称</source>
         <translation>กรุณาใส่ชื่อเครื่องบนคลาวด์</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="775"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="933"/>
         <source>分辨率</source>
         <translation>ความละเอียด</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="574"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="719"/>
         <source>DNS类型</source>
         <translation>ประเภท DNS</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="588"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="733"/>
         <source>DNS地址</source>
         <translation>ที่อยู่ DNS</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="644"/>
         <source>默认机型</source>
-        <translation>โมเดลเริ่มต้น</translation>
+        <translation type="vanished">โมเดลเริ่มต้น</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="662"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="827"/>
         <source>指定机型</source>
         <translation>ระบุรุ่น</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="686"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="840"/>
         <source>品牌</source>
         <translation>แบรนด์</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="713"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="871"/>
         <source>机型</source>
         <translation>รุ่นเครื่อง</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="873"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="1031"/>
         <source>将按前缀自动编号生成%1个云机：</source>
         <oldsource> 台云机：</oldsource>
         <translation>จะสร้างคลาวด์แมชชีน %1 เครื่องโดยใช้การกำหนดหมายเลขอัตโนมัติตามคำนำหน้า:</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="873"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="1031"/>
         <source>将创建%1台云机：</source>
         <translation>จะสร้างเครื่องบนคลาวด์จำนวน %1 เครื่อง：</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="952"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="1110"/>
         <source>创建云机数量必须大于0</source>
         <translation>ต้องสร้างจำนวนเครื่องคลาวด์มากกว่า 0</translation>
     </message>
@@ -990,12 +991,12 @@
         <translation type="vanished">เกินจำนวนสูงสุดที่สามารถสร้างได้</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="1093"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="1256"/>
         <source>自定义DNS不能为空</source>
         <translation>กำหนดค่า DNS ไม่สามารถเว้นว่างได้</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="1099"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="1262"/>
         <source>无效的DNS地址: </source>
         <translation>ที่อยู่ DNS ไม่ถูกต้อง:</translation>
     </message>
@@ -1004,48 +1005,119 @@
         <translation type="vanished">(ดาวน์โหลดแล้ว)</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="1187"/>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="1218"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="1412"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="1444"/>
         <source> (已上传)</source>
         <translation>(อัปโหลดแล้ว)</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="1330"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="1576"/>
         <source>正在创建云机...</source>
         <translation>กำลังสร้างคลาวด์คอมพิวเตอร์...</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="164"/>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="592"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="167"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="737"/>
         <source>请输入DNS地址</source>
         <translation>กรุณาใส่ที่อยู่ DNS</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="828"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="986"/>
         <source>云机数量</source>
         <translation>จำนวนเครื่องบนคลาวด์</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="850"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="1008"/>
         <source>单次可创建云机数量不超过 12 台</source>
         <oldsource>单次可创建云机数量不超过 %1 台</oldsource>
         <translation type="unfinished">จำนวนคลาวด์คอมพิวเตอร์ที่สามารถสร้างได้ที่เหลือ: %1</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="903"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="1061"/>
         <source>镜像上传中..</source>
         <oldsource>镜像下载中..</oldsource>
         <translation>กำลังอัปโหลดภาพ..</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="934"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="1092"/>
         <source>取消</source>
         <translation>ยกเลิก</translation>
     </message>
     <message>
-        <location filename="qml/CreateCloudPhonePopup.qml" line="940"/>
+        <location filename="qml/CreateCloudPhonePopup.qml" line="1098"/>
         <source>确定</source>
         <translation>ยืนยัน</translation>
+    </message>
+</context>
+<context>
+    <name>DeviceDetailPopup</name>
+    <message>
+        <location filename="qml/DeviceDetailPopup.qml" line="172"/>
+        <source>云机详情</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/DeviceDetailPopup.qml" line="199"/>
+        <source>云机ID：</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/DeviceDetailPopup.qml" line="215"/>
+        <location filename="qml/DeviceDetailPopup.qml" line="243"/>
+        <location filename="qml/DeviceDetailPopup.qml" line="271"/>
+        <location filename="qml/DeviceDetailPopup.qml" line="299"/>
+        <location filename="qml/DeviceDetailPopup.qml" line="326"/>
+        <location filename="qml/DeviceDetailPopup.qml" line="353"/>
+        <location filename="qml/DeviceDetailPopup.qml" line="381"/>
+        <location filename="qml/DeviceDetailPopup.qml" line="409"/>
+        <location filename="qml/DeviceDetailPopup.qml" line="437"/>
+        <source>复制成功</source>
+        <translation type="unfinished">คัดลอกสำเร็จ</translation>
+    </message>
+    <message>
+        <location filename="qml/DeviceDetailPopup.qml" line="227"/>
+        <source>云机名称：</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/DeviceDetailPopup.qml" line="255"/>
+        <source>镜像版本：</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/DeviceDetailPopup.qml" line="283"/>
+        <source>Android版本：</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/DeviceDetailPopup.qml" line="311"/>
+        <source>品牌：</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/DeviceDetailPopup.qml" line="338"/>
+        <source>机型：</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/DeviceDetailPopup.qml" line="365"/>
+        <source>ADB：</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/DeviceDetailPopup.qml" line="393"/>
+        <source>容器网络：</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/DeviceDetailPopup.qml" line="421"/>
+        <source>局域网络：</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/DeviceDetailPopup.qml" line="452"/>
+        <source>关闭</source>
+        <translation type="unfinished">ปิด</translation>
     </message>
 </context>
 <context>
@@ -2066,17 +2138,17 @@
         <translation>วินาที</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="428"/>
+        <location filename="qml/MainWindow.qml" line="445"/>
         <source>开始扫描主机...</source>
         <translation>กำลังเริ่มต้นการสแกนโฮสต์...</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="451"/>
+        <location filename="qml/MainWindow.qml" line="468"/>
         <source>主机 %1 已存在</source>
         <translation>โฮสต์ %1 มีอยู่แล้ว</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="557"/>
+        <location filename="qml/MainWindow.qml" line="588"/>
         <source>重命名</source>
         <translation>เปลี่ยนชื่อ</translation>
     </message>
@@ -2085,63 +2157,61 @@
         <translation type="vanished">กรุณากรอกชื่อ</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="566"/>
-        <location filename="qml/MainWindow.qml" line="680"/>
-        <location filename="qml/MainWindow.qml" line="717"/>
-        <location filename="qml/MainWindow.qml" line="753"/>
-        <location filename="qml/MainWindow.qml" line="834"/>
-        <location filename="qml/MainWindow.qml" line="870"/>
-        <location filename="qml/MainWindow.qml" line="1271"/>
-        <location filename="qml/MainWindow.qml" line="1377"/>
-        <location filename="qml/MainWindow.qml" line="1586"/>
-        <location filename="qml/MainWindow.qml" line="1607"/>
-        <location filename="qml/MainWindow.qml" line="1628"/>
-        <location filename="qml/MainWindow.qml" line="1709"/>
-        <location filename="qml/MainWindow.qml" line="1730"/>
-        <location filename="qml/MainWindow.qml" line="1768"/>
-        <location filename="qml/MainWindow.qml" line="1791"/>
-        <location filename="qml/MainWindow.qml" line="1814"/>
-        <location filename="qml/MainWindow.qml" line="1929"/>
-        <location filename="qml/MainWindow.qml" line="2051"/>
-        <location filename="qml/MainWindow.qml" line="2358"/>
-        <location filename="qml/MainWindow.qml" line="2412"/>
-        <location filename="qml/MainWindow.qml" line="2662"/>
-        <location filename="qml/MainWindow.qml" line="2680"/>
-        <location filename="qml/MainWindow.qml" line="2698"/>
-        <location filename="qml/MainWindow.qml" line="2716"/>
-        <location filename="qml/MainWindow.qml" line="2748"/>
-        <location filename="qml/MainWindow.qml" line="2767"/>
-        <location filename="qml/MainWindow.qml" line="2813"/>
-        <location filename="qml/MainWindow.qml" line="2832"/>
+        <location filename="qml/MainWindow.qml" line="597"/>
+        <location filename="qml/MainWindow.qml" line="711"/>
+        <location filename="qml/MainWindow.qml" line="748"/>
+        <location filename="qml/MainWindow.qml" line="784"/>
+        <location filename="qml/MainWindow.qml" line="866"/>
+        <location filename="qml/MainWindow.qml" line="902"/>
+        <location filename="qml/MainWindow.qml" line="1303"/>
+        <location filename="qml/MainWindow.qml" line="1418"/>
+        <location filename="qml/MainWindow.qml" line="1627"/>
+        <location filename="qml/MainWindow.qml" line="1648"/>
+        <location filename="qml/MainWindow.qml" line="1669"/>
+        <location filename="qml/MainWindow.qml" line="1774"/>
+        <location filename="qml/MainWindow.qml" line="1838"/>
+        <location filename="qml/MainWindow.qml" line="1861"/>
+        <location filename="qml/MainWindow.qml" line="1884"/>
+        <location filename="qml/MainWindow.qml" line="1999"/>
+        <location filename="qml/MainWindow.qml" line="2127"/>
+        <location filename="qml/MainWindow.qml" line="2486"/>
+        <location filename="qml/MainWindow.qml" line="2540"/>
+        <location filename="qml/MainWindow.qml" line="2790"/>
+        <location filename="qml/MainWindow.qml" line="2808"/>
+        <location filename="qml/MainWindow.qml" line="2826"/>
+        <location filename="qml/MainWindow.qml" line="2844"/>
+        <location filename="qml/MainWindow.qml" line="2876"/>
+        <location filename="qml/MainWindow.qml" line="2895"/>
+        <location filename="qml/MainWindow.qml" line="2941"/>
+        <location filename="qml/MainWindow.qml" line="2960"/>
         <source>取消</source>
         <translation>ยกเลิก</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="567"/>
-        <location filename="qml/MainWindow.qml" line="679"/>
-        <location filename="qml/MainWindow.qml" line="716"/>
-        <location filename="qml/MainWindow.qml" line="752"/>
-        <location filename="qml/MainWindow.qml" line="833"/>
-        <location filename="qml/MainWindow.qml" line="869"/>
-        <location filename="qml/MainWindow.qml" line="1270"/>
-        <location filename="qml/MainWindow.qml" line="1376"/>
-        <location filename="qml/MainWindow.qml" line="1585"/>
-        <location filename="qml/MainWindow.qml" line="1606"/>
-        <location filename="qml/MainWindow.qml" line="1627"/>
-        <location filename="qml/MainWindow.qml" line="1708"/>
-        <location filename="qml/MainWindow.qml" line="1729"/>
-        <location filename="qml/MainWindow.qml" line="1767"/>
-        <location filename="qml/MainWindow.qml" line="1790"/>
-        <location filename="qml/MainWindow.qml" line="1813"/>
-        <location filename="qml/MainWindow.qml" line="1933"/>
-        <location filename="qml/MainWindow.qml" line="2363"/>
-        <location filename="qml/MainWindow.qml" line="2418"/>
-        <location filename="qml/MainWindow.qml" line="2661"/>
-        <location filename="qml/MainWindow.qml" line="2679"/>
-        <location filename="qml/MainWindow.qml" line="2697"/>
-        <location filename="qml/MainWindow.qml" line="2715"/>
-        <location filename="qml/MainWindow.qml" line="2766"/>
-        <location filename="qml/MainWindow.qml" line="2831"/>
+        <location filename="qml/MainWindow.qml" line="598"/>
+        <location filename="qml/MainWindow.qml" line="710"/>
+        <location filename="qml/MainWindow.qml" line="747"/>
+        <location filename="qml/MainWindow.qml" line="783"/>
+        <location filename="qml/MainWindow.qml" line="865"/>
+        <location filename="qml/MainWindow.qml" line="901"/>
+        <location filename="qml/MainWindow.qml" line="1302"/>
+        <location filename="qml/MainWindow.qml" line="1417"/>
+        <location filename="qml/MainWindow.qml" line="1626"/>
+        <location filename="qml/MainWindow.qml" line="1647"/>
+        <location filename="qml/MainWindow.qml" line="1668"/>
+        <location filename="qml/MainWindow.qml" line="1773"/>
+        <location filename="qml/MainWindow.qml" line="1837"/>
+        <location filename="qml/MainWindow.qml" line="1860"/>
+        <location filename="qml/MainWindow.qml" line="1883"/>
+        <location filename="qml/MainWindow.qml" line="2003"/>
+        <location filename="qml/MainWindow.qml" line="2491"/>
+        <location filename="qml/MainWindow.qml" line="2546"/>
+        <location filename="qml/MainWindow.qml" line="2789"/>
+        <location filename="qml/MainWindow.qml" line="2807"/>
+        <location filename="qml/MainWindow.qml" line="2825"/>
+        <location filename="qml/MainWindow.qml" line="2843"/>
+        <location filename="qml/MainWindow.qml" line="2894"/>
+        <location filename="qml/MainWindow.qml" line="2959"/>
         <source>确定</source>
         <translation>ตกลง</translation>
     </message>
@@ -2170,14 +2240,14 @@
         <translation type="vanished">ลบแบบกลุ่ม</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="1666"/>
+        <location filename="qml/MainWindow.qml" line="1707"/>
         <source>修改镜像</source>
         <oldsource>升级镜像</oldsource>
         <translation>ปรับเปลี่ยนภาพสะท้อน</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="825"/>
-        <location filename="qml/MainWindow.qml" line="1703"/>
+        <location filename="qml/MainWindow.qml" line="856"/>
+        <location filename="qml/MainWindow.qml" line="1744"/>
         <source>一键新机</source>
         <translation>เริ่มต้นใหม่ด้วยการคลิกเดียว</translation>
     </message>
@@ -2202,8 +2272,8 @@
         <translation type="vanished">ยกเลิกการอนุญาต</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="860"/>
-        <location filename="qml/MainWindow.qml" line="1724"/>
+        <location filename="qml/MainWindow.qml" line="892"/>
+        <location filename="qml/MainWindow.qml" line="1768"/>
         <source>重启云机</source>
         <oldsource>批量重启</oldsource>
         <translation>รีสตาร์ทเครื่องคลาวด์</translation>
@@ -2253,8 +2323,8 @@
         <translation type="vanished">แสดงอุปกรณ์ปิดเครื่อง</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="2747"/>
-        <location filename="qml/MainWindow.qml" line="2812"/>
+        <location filename="qml/MainWindow.qml" line="2875"/>
+        <location filename="qml/MainWindow.qml" line="2940"/>
         <source>删除</source>
         <translation>ลบ</translation>
     </message>
@@ -2263,7 +2333,7 @@
         <translation type="vanished">การถ่ายโอนอุปกรณ์</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="590"/>
+        <location filename="qml/MainWindow.qml" line="621"/>
         <source>下次不再提示</source>
         <translation>ไม่แสดงข้อความนี้อีก</translation>
     </message>
@@ -2292,27 +2362,27 @@
         <translation type="vanished">การอนุญาตอุปกรณ์</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="941"/>
+        <location filename="qml/MainWindow.qml" line="973"/>
         <source>默认排序</source>
         <translation>การจัดเรียงตามค่าเริ่มต้น</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="947"/>
+        <location filename="qml/MainWindow.qml" line="979"/>
         <source>按创建时间降序</source>
         <translation>เรียงตามเวลาการสร้างจากล่าสุดไปเก่าสุด</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="953"/>
+        <location filename="qml/MainWindow.qml" line="985"/>
         <source>按创建时间升序</source>
         <translation>เรียงตามเวลาการสร้างจากน้อยไปมาก</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="960"/>
+        <location filename="qml/MainWindow.qml" line="992"/>
         <source>按剩余时长降序</source>
         <translation>เรียงตามเวลาที่เหลือจากมากไปน้อย</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="967"/>
+        <location filename="qml/MainWindow.qml" line="999"/>
         <source>按剩余时长升序</source>
         <translation>เรียงตามระยะเวลาที่เหลือจากน้อยไปมาก</translation>
     </message>
@@ -2329,42 +2399,58 @@
         <translation type="vanished">แสดงโหมด</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="1062"/>
+        <location filename="qml/MainWindow.qml" line="1094"/>
         <source>大视图</source>
         <translation>มุมมองขนาดใหญ่</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="1081"/>
+        <location filename="qml/MainWindow.qml" line="1113"/>
         <source>中视图</source>
         <translation>มุมมองกลาง</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="1100"/>
+        <location filename="qml/MainWindow.qml" line="1132"/>
         <source>小视图</source>
         <translation>มุมมองเล็กๆ</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="1951"/>
+        <location filename="qml/MainWindow.qml" line="2021"/>
         <source>设置</source>
         <translation>การตั้งค่า</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="1966"/>
+        <location filename="qml/MainWindow.qml" line="2030"/>
+        <source>v%1</source>
+        <oldsource>版本 v%1</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/MainWindow.qml" line="2042"/>
         <source>帮助中心</source>
         <translation>ศูนย์ช่วยเหลือ</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="1972"/>
+        <location filename="qml/MainWindow.qml" line="2048"/>
         <source>通用设置</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="2472"/>
+        <location filename="qml/MainWindow.qml" line="2321"/>
+        <source>运行中云机</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/MainWindow.qml" line="2332"/>
+        <source>所有云机</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/MainWindow.qml" line="2600"/>
         <source>刷新过于频繁，请稍后再试</source>
         <translation>รีเฟรชบ่อยเกินไป โปรดลองอีกครั้งในภายหลัง</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="2714"/>
+        <location filename="qml/MainWindow.qml" line="2842"/>
         <source>删除主机仅适用于永久离线或IP已变更的主机。若主机恢复在线，系统的自动发现功能会重新将其添加至列表。</source>
         <translation>การลบโฮสต์ใช้ได้เฉพาะกับโฮสต์ที่ออฟไลน์ถาวรหรือที่เปลี่ยน IP แล้วเท่านั้น หากโฮสต์กลับมาออนไลน์ ระบบจะเพิ่มกลับเข้าสู่รายการผ่านฟังก์ชันการค้นพบอัตโนมัติ</translation>
     </message>
@@ -2377,29 +2463,28 @@
         <translation type="vanished">เปลี่ยนการกำหนดค่า</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="677"/>
-        <location filename="qml/MainWindow.qml" line="714"/>
-        <location filename="qml/MainWindow.qml" line="750"/>
-        <location filename="qml/MainWindow.qml" line="831"/>
-        <location filename="qml/MainWindow.qml" line="867"/>
-        <location filename="qml/MainWindow.qml" line="1268"/>
-        <location filename="qml/MainWindow.qml" line="1374"/>
-        <location filename="qml/MainWindow.qml" line="1583"/>
-        <location filename="qml/MainWindow.qml" line="1604"/>
-        <location filename="qml/MainWindow.qml" line="1625"/>
-        <location filename="qml/MainWindow.qml" line="1706"/>
-        <location filename="qml/MainWindow.qml" line="1727"/>
-        <location filename="qml/MainWindow.qml" line="1765"/>
-        <location filename="qml/MainWindow.qml" line="1788"/>
-        <location filename="qml/MainWindow.qml" line="1811"/>
-        <location filename="qml/MainWindow.qml" line="1927"/>
-        <location filename="qml/MainWindow.qml" line="2047"/>
-        <location filename="qml/MainWindow.qml" line="2354"/>
-        <location filename="qml/MainWindow.qml" line="2408"/>
-        <location filename="qml/MainWindow.qml" line="2659"/>
-        <location filename="qml/MainWindow.qml" line="2677"/>
-        <location filename="qml/MainWindow.qml" line="2695"/>
-        <location filename="qml/MainWindow.qml" line="2713"/>
+        <location filename="qml/MainWindow.qml" line="708"/>
+        <location filename="qml/MainWindow.qml" line="745"/>
+        <location filename="qml/MainWindow.qml" line="781"/>
+        <location filename="qml/MainWindow.qml" line="863"/>
+        <location filename="qml/MainWindow.qml" line="899"/>
+        <location filename="qml/MainWindow.qml" line="1300"/>
+        <location filename="qml/MainWindow.qml" line="1415"/>
+        <location filename="qml/MainWindow.qml" line="1624"/>
+        <location filename="qml/MainWindow.qml" line="1645"/>
+        <location filename="qml/MainWindow.qml" line="1666"/>
+        <location filename="qml/MainWindow.qml" line="1771"/>
+        <location filename="qml/MainWindow.qml" line="1835"/>
+        <location filename="qml/MainWindow.qml" line="1858"/>
+        <location filename="qml/MainWindow.qml" line="1881"/>
+        <location filename="qml/MainWindow.qml" line="1997"/>
+        <location filename="qml/MainWindow.qml" line="2123"/>
+        <location filename="qml/MainWindow.qml" line="2482"/>
+        <location filename="qml/MainWindow.qml" line="2536"/>
+        <location filename="qml/MainWindow.qml" line="2787"/>
+        <location filename="qml/MainWindow.qml" line="2805"/>
+        <location filename="qml/MainWindow.qml" line="2823"/>
+        <location filename="qml/MainWindow.qml" line="2841"/>
         <source>操作确认</source>
         <oldsource>系统提示</oldsource>
         <translation>การยืนยันการดำเนินการ</translation>
@@ -2413,8 +2498,8 @@
         <translation type="vanished">ไม่สามารถมีอุปกรณ์จับเวลาได้ โปรดเลือกใหม่</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="678"/>
-        <location filename="qml/MainWindow.qml" line="1584"/>
+        <location filename="qml/MainWindow.qml" line="709"/>
+        <location filename="qml/MainWindow.qml" line="1625"/>
         <source>重置云机将清除云手机上的所有数据，云手机参数不会改变，请谨慎操作！</source>
         <oldsource>确定要重置云机？云机数据将被清空，请谨慎选择！</oldsource>
         <translation>รีเซ็ตคลาวด์โฟนจะล้างข้อมูลทั้งหมดบนคลาวด์โฟน พารามิเตอร์ของคลาวด์โฟนจะไม่เปลี่ยนแปลง กรุณาดำเนินการด้วยความระมัดระวัง!</translation>
@@ -2424,8 +2509,8 @@
         <translation type="vanished">ยืนยันที่จะรีเซ็ตเครื่องด้วยคลิกเดียว? เครื่องคลาวด์จะล้างข้อมูลทั้งหมด เปลี่ยนรหัสอุปกรณ์และตัวระบุเฉพาะทั้งหมดของอุปกรณ์ (เครื่องคลาวด์มาตรฐานจะเปลี่ยนรุ่นเครื่องแบบสุ่ม เครื่องคลาวด์ระดับสูงจะเปลี่ยน</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="751"/>
-        <location filename="qml/MainWindow.qml" line="1626"/>
+        <location filename="qml/MainWindow.qml" line="782"/>
+        <location filename="qml/MainWindow.qml" line="1667"/>
         <source>删除云机将清除云手机及其所有数据，操作后无法恢复，请谨慎操作！</source>
         <oldsource>删除设备云机数据将被清空，请谨慎删除！</oldsource>
         <translation>การลบ Cloud Phone จะลบข้อมูลทั้งหมดใน Cloud Phone และไม่สามารถกู้คืนได้หลังการดำเนินการ โปรดดำเนินการด้วยความระมัดระวัง！</translation>
@@ -2488,12 +2573,12 @@
         <translation type="vanished">ต้องการสลับบัญชีใช่ไหม</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="2060"/>
+        <location filename="qml/MainWindow.qml" line="2136"/>
         <source>最小化到托盘</source>
         <translation>ย่อเล็กสุดไปยังถาดระบบ</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="2127"/>
+        <location filename="qml/MainWindow.qml" line="2203"/>
         <source>请输入云机名称、IP</source>
         <oldsource>请输入ID、名称、IP</oldsource>
         <translation>กรุณาใส่ชื่อและ IP ของ Cloud Machine</translation>
@@ -2519,8 +2604,8 @@
         <translation type="vanished">ได้รับอนุญาต</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="2150"/>
-        <location filename="qml/MainWindow.qml" line="2156"/>
+        <location filename="qml/MainWindow.qml" line="2226"/>
+        <location filename="qml/MainWindow.qml" line="2232"/>
         <source>添加分组</source>
         <oldsource>新建分组</oldsource>
         <translation>เพิ่มกลุ่ม</translation>
@@ -2534,12 +2619,12 @@
         <translation type="vanished">กรุณากรอกตัวเลขระหว่าง 1 ถึง 500</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="2381"/>
+        <location filename="qml/MainWindow.qml" line="2509"/>
         <source>云机播放窗口已打开，请先关闭后同步操作</source>
         <translation>หน้าต่างเครื่องเล่นคลาวด์ถูกเปิดอยู่ กรุณาปิดก่อนดำเนินการซิงค์</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="2402"/>
+        <location filename="qml/MainWindow.qml" line="2530"/>
         <source>魔盒设备不能和云机设备一起同步操作，请分开进行同步操作</source>
         <translation>อุปกรณ์ Magic Box ไม่สามารถทำงานประสานกับอุปกรณ์ Cloud Machine ได้ โปรดดำเนินการประสานงานแยกกัน</translation>
     </message>
@@ -2624,27 +2709,27 @@
         <translation type="vanished">ปิดแผงหลักเมื่อ</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="3117"/>
+        <location filename="qml/MainWindow.qml" line="3245"/>
         <source>正在更新中...</source>
         <translation>กำลังอัพเดต...</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="3818"/>
+        <location filename="qml/MainWindow.qml" line="3957"/>
         <source>正在更新CBS程序，请稍候...</source>
         <translation>กำลังอัพเดตโปรแกรม CBS โปรดรอสักครู่...</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="3828"/>
+        <location filename="qml/MainWindow.qml" line="3967"/>
         <source>CBS自动升级完成</source>
         <translation>การอัปเกรดอัตโนมัติของ CBS เสร็จสมบูรณ์</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="2052"/>
+        <location filename="qml/MainWindow.qml" line="2128"/>
         <source>退出程序</source>
         <translation>ออกจากโปรแกรม</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="464"/>
+        <location filename="qml/MainWindow.qml" line="481"/>
         <source>IP地址访问异常！</source>
         <translation>การเข้าถึงที่อยู่ IP ผิดปกติ!</translation>
     </message>
@@ -2653,8 +2738,8 @@
         <translation type="vanished">คัดลอกไอดี</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="649"/>
-        <location filename="qml/MainWindow.qml" line="1572"/>
+        <location filename="qml/MainWindow.qml" line="680"/>
+        <location filename="qml/MainWindow.qml" line="1613"/>
         <source>启动云机</source>
         <oldsource>开机</oldsource>
         <translation>เปิดตัวเครื่องเสมือนบนคลาวด์</translation>
@@ -2664,47 +2749,47 @@
         <translation type="vanished">ปิดเครื่อง</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="743"/>
-        <location filename="qml/MainWindow.qml" line="1622"/>
+        <location filename="qml/MainWindow.qml" line="774"/>
+        <location filename="qml/MainWindow.qml" line="1663"/>
         <source>删除云机</source>
         <translation>ลบเครื่องเสมือน</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="991"/>
+        <location filename="qml/MainWindow.qml" line="1023"/>
         <source>列表模式</source>
         <translation>โหมดรายการ</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="1007"/>
+        <location filename="qml/MainWindow.qml" line="1039"/>
         <source>窗口模式</source>
         <oldsource>预览模式</oldsource>
         <translation>โหมดหน้าต่าง</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="1269"/>
+        <location filename="qml/MainWindow.qml" line="1301"/>
         <source>确定要删除分组吗？</source>
         <translation>คุณแน่ใจหรือว่าต้องการลบกลุ่ม</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="2696"/>
+        <location filename="qml/MainWindow.qml" line="2824"/>
         <source>重置主机会将该主机上所有的云机和数据清除，确认重置吗？</source>
         <translation>รีเซ็ตโฮสต์จะล้างข้อมูลทั้งหมดของเครื่องคลาวด์และข้อมูลบนโฮสต์นี้ ยืนยันที่จะรีเซ็ตหรือไม่?</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="1375"/>
+        <location filename="qml/MainWindow.qml" line="1416"/>
         <source>重启主机会将该主机上所有的云机重启，确认重启吗？</source>
         <translation>รีสตาร์ทโฮสต์จะรีสตาร์ทเครื่องคลาวด์ทั้งหมดบนโฮสต์นี้ ยืนยันที่จะรีสตาร์ทหรือไม่</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="868"/>
-        <location filename="qml/MainWindow.qml" line="1728"/>
+        <location filename="qml/MainWindow.qml" line="900"/>
+        <location filename="qml/MainWindow.qml" line="1772"/>
         <source>重启云机将重新启动云手机系统，运行中的任务可能会中断，请谨慎操作！</source>
         <oldsource>确定要进行重启操作吗？重启指令下发成功后，被重启的云机将在1-3分钟之内完成重启！</oldsource>
         <translation>รีสตาร์ทคลาวด์โฟนจะเป็นการรีสตาร์ทระบบคลาวด์โฟน งานที่กำลังดำเนินการอาจถูกขัดจังหวะ โปรดดำเนินการอย่างระมัดระวัง！</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="715"/>
-        <location filename="qml/MainWindow.qml" line="1605"/>
+        <location filename="qml/MainWindow.qml" line="746"/>
+        <location filename="qml/MainWindow.qml" line="1646"/>
         <source>确定要关闭云手机吗？</source>
         <translation>ยืนยันการปิดโทรศัพท์บนคลาวด์</translation>
     </message>
@@ -2713,23 +2798,23 @@
         <translation type="vanished">รายละเอียดโฮสต์</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="1766"/>
-        <location filename="qml/MainWindow.qml" line="2678"/>
+        <location filename="qml/MainWindow.qml" line="1836"/>
+        <location filename="qml/MainWindow.qml" line="2806"/>
         <source>确定要重启主机吗？</source>
         <translation>คุณแน่ใจหรือไม่ว่าต้องการรีสตาร์ทโฮสต์</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="1804"/>
+        <location filename="qml/MainWindow.qml" line="1874"/>
         <source>清理镜像</source>
         <translation>ทำความสะอาดมิเรอร์</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="2660"/>
+        <location filename="qml/MainWindow.qml" line="2788"/>
         <source>确定要清理未使用的镜像获取更多的存储空间吗？</source>
         <translation>แน่ใจหรือไม่ว่าต้องการลบอิมเมจที่ไม่ได้ใช้งานเพื่อเพิ่มพื้นที่เก็บข้อมูล</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="1866"/>
+        <location filename="qml/MainWindow.qml" line="1936"/>
         <source>VMOS Edge</source>
         <translation>VMOS Edge</translation>
     </message>
@@ -2758,74 +2843,78 @@
         <translation>ไม่สามารถมีอุปกรณ์ที่กำลังสร้าง กรุณาเลือกใหม่</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="787"/>
-        <location filename="qml/MainWindow.qml" line="1649"/>
+        <location filename="qml/MainWindow.qml" line="818"/>
+        <location filename="qml/MainWindow.qml" line="1690"/>
         <source>长度限制 2–11 个字符，仅允许使用 [a–zA–Z0–9_.-]，且首尾字符不得为[._-]</source>
         <translation>จำกัดความยาว 2–11 อักขระ อนุญาตเฉพาะ [a–zA–Z0–9_.-] และอักขระตัวแรกและตัวสุดท้ายต้องไม่ใช่ [._-]</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="832"/>
-        <location filename="qml/MainWindow.qml" line="1707"/>
+        <location filename="qml/MainWindow.qml" line="864"/>
         <source>一键新机将清除云手机上的所有数据，云手机参数会重新生成，请谨慎操作！</source>
         <translation>การกดเครื่องใหม่ครั้งเดียวจะล้างข้อมูลทั้งหมดบนคลาวด์โฟน พารามิเตอร์ของคลาวด์โฟนจะถูกสร้างใหม่ กรุณาดำเนินการอย่างระมัดระวัง!</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="898"/>
+        <location filename="qml/MainWindow.qml" line="930"/>
         <source>一键投屏</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="917"/>
+        <location filename="qml/MainWindow.qml" line="949"/>
         <source>一键排序</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="921"/>
+        <location filename="qml/MainWindow.qml" line="953"/>
         <source>已按默认排序</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="926"/>
+        <location filename="qml/MainWindow.qml" line="958"/>
         <source>一键关闭</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="930"/>
+        <location filename="qml/MainWindow.qml" line="962"/>
         <source>已关闭所有云机窗口</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="1239"/>
+        <location filename="qml/MainWindow.qml" line="1271"/>
         <source>修改分组名称</source>
         <translation>แก้ไขชื่อกลุ่ม</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="1515"/>
+        <location filename="qml/MainWindow.qml" line="1556"/>
         <source>复制成功</source>
         <translation type="unfinished">คัดลอกสำเร็จ</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="1745"/>
+        <location filename="qml/MainWindow.qml" line="1805"/>
         <source>API接口</source>
         <translation>อินเทอร์เฟซ API</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="1747"/>
+        <location filename="qml/MainWindow.qml" line="1807"/>
         <source>http://%1:18182/docs</source>
         <translation>http://%1:18182/docs</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="1789"/>
+        <location filename="qml/MainWindow.qml" line="1812"/>
+        <source>云机详情</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/MainWindow.qml" line="1859"/>
         <source>重置主机将删除该主机上的全部云机及相关数据，确认执行此操作吗？</source>
         <translation>รีเซ็ตโฮสต์จะลบโวลต์เครื่องและข้อมูลที่เกี่ยวข้องทั้งหมดบนโฮสต์นี้ คุณแน่ใจที่จะดำเนินการนี้หรือไม่?</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="1812"/>
+        <location filename="qml/MainWindow.qml" line="1882"/>
         <source>清理未使用的镜像将释放存储空间，确认执行此操作吗？</source>
         <translation>การลบอิมเมจที่ไม่ได้ใช้งานจะช่วยปลดปล่อยพื้นที่เก็บข้อมูล ยืนยันที่จะดำเนินการนี้หรือไม่?</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="1878"/>
+        <location filename="qml/MainWindow.qml" line="1948"/>
         <source>主机</source>
         <translation>โฮสต์</translation>
     </message>
@@ -2838,22 +2927,21 @@
         <translation type="vanished">VMOSCloud โทรศัพท์บนคลาวด์</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="1928"/>
+        <location filename="qml/MainWindow.qml" line="1998"/>
         <source>修改语言需要重启程序，是否立即重启？</source>
         <translation>การเปลี่ยนภาษาโปรแกรมจำเป็นต้องรีสตาร์ทโปรแกรม ท่านต้องการรีสตาร์ทโปรแกรมตอนนี้หรือไม่?</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="1981"/>
+        <location filename="qml/MainWindow.qml" line="2057"/>
         <source>机型设置</source>
         <translation>การตั้งค่ารุ่น</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="1990"/>
         <source>版本：v%1</source>
-        <translation>เวอร์ชัน: v%1</translation>
+        <translation type="vanished">เวอร์ชัน: v%1</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="2182"/>
+        <location filename="qml/MainWindow.qml" line="2258"/>
         <source>添加主机</source>
         <translation>เพิ่มโฮสต์</translation>
     </message>
@@ -2918,33 +3006,33 @@
         <translation type="vanished">อนุญาตให้ใช้เฉพาะตัวเลข/ตัวอักษร/ขีดล่างเท่านั้น และต้องมีความยาวไม่เกิน 10 ตัวอักษร</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="671"/>
-        <location filename="qml/MainWindow.qml" line="1580"/>
+        <location filename="qml/MainWindow.qml" line="702"/>
+        <location filename="qml/MainWindow.qml" line="1621"/>
         <source>重置云机</source>
         <translation>รีเซ็ตเครื่องในระบบคลาวด์</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="707"/>
-        <location filename="qml/MainWindow.qml" line="1601"/>
+        <location filename="qml/MainWindow.qml" line="738"/>
+        <location filename="qml/MainWindow.qml" line="1642"/>
         <source>关闭云机</source>
         <oldsource>关机云机</oldsource>
         <translation>ปิดเครื่องคลาวด์</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="780"/>
-        <location filename="qml/MainWindow.qml" line="786"/>
-        <location filename="qml/MainWindow.qml" line="1644"/>
-        <location filename="qml/MainWindow.qml" line="1647"/>
+        <location filename="qml/MainWindow.qml" line="811"/>
+        <location filename="qml/MainWindow.qml" line="817"/>
+        <location filename="qml/MainWindow.qml" line="1685"/>
+        <location filename="qml/MainWindow.qml" line="1688"/>
         <source>修改名称</source>
         <translation>แก้ไขชื่อ</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="1685"/>
+        <location filename="qml/MainWindow.qml" line="1726"/>
         <source>设置代理</source>
         <translation>ตั้งค่าพร็อกซี่</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="1025"/>
+        <location filename="qml/MainWindow.qml" line="1057"/>
         <source>横屏</source>
         <translation>แนวนอน</translation>
     </message>
@@ -2953,29 +3041,29 @@
         <translation type="vanished">การดำเนินการนี้จะปรับเปลี่ยนข้อมูลระบุตัวตนเฉพาะของอุปกรณ์ (รวมถึงแต่ไม่จำกัดเฉพาะรหัสอุปกรณ์ IMEI รหัส Android ID ฯลฯ) และข้อมูลสภาพแวดล้อมแอปพลิเคชันอย่างถาวร ซึ่งจะจำลองอุปกรณ์ใหม่ที่ยังไม่เคยถูกใช้งานมาก่อน</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="1043"/>
+        <location filename="qml/MainWindow.qml" line="1075"/>
         <source>竖屏</source>
         <translation>แนวตั้ง</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="1245"/>
-        <location filename="qml/MainWindow.qml" line="2162"/>
+        <location filename="qml/MainWindow.qml" line="1277"/>
+        <location filename="qml/MainWindow.qml" line="2238"/>
         <source>名称长度为2-15字符</source>
         <oldsource>长度限制： 不超过 15 个字符</oldsource>
         <translation>ความยาวชื่อต้องอยู่ระหว่าง 2-15 ตัวอักษร</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="1758"/>
+        <location filename="qml/MainWindow.qml" line="1828"/>
         <source>重启主机</source>
         <translation>รีสตาร์ตโฮสต์</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="1781"/>
+        <location filename="qml/MainWindow.qml" line="1851"/>
         <source>重置主机</source>
         <translation>รีเซ็ตโฮสต์</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="1879"/>
+        <location filename="qml/MainWindow.qml" line="1949"/>
         <source>镜像</source>
         <translation>ภาพสะท้อน</translation>
     </message>
@@ -2984,14 +3072,14 @@
         <translation type="vanished">เวอร์ชันปัจจุบัน:</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="2745"/>
-        <location filename="qml/MainWindow.qml" line="2810"/>
+        <location filename="qml/MainWindow.qml" line="2873"/>
+        <location filename="qml/MainWindow.qml" line="2938"/>
         <source>确认删除</source>
         <translation>ยืนยันการลบ</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="2746"/>
-        <location filename="qml/MainWindow.qml" line="2811"/>
+        <location filename="qml/MainWindow.qml" line="2874"/>
+        <location filename="qml/MainWindow.qml" line="2939"/>
         <source>确定要删除镜像 &quot;%1&quot; 吗？此操作将永久删除镜像文件，无法恢复。</source>
         <oldsource>确定要删除镜像 &quot;%1&quot; 吗？
 
@@ -2999,14 +3087,14 @@
         <translation>คุณแน่ใจหรือไม่ว่าต้องการลบอิมเมจ &quot;%1&quot;? การดำเนินการนี้จะลบไฟล์อิมเมจอย่างถาวรและไม่สามารถกู้คืนได้</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="2764"/>
-        <location filename="qml/MainWindow.qml" line="2829"/>
+        <location filename="qml/MainWindow.qml" line="2892"/>
+        <location filename="qml/MainWindow.qml" line="2957"/>
         <source>确认更改路径</source>
         <translation>ยืนยันการเปลี่ยนแปลงเส้นทาง</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="2765"/>
-        <location filename="qml/MainWindow.qml" line="2830"/>
+        <location filename="qml/MainWindow.qml" line="2893"/>
+        <location filename="qml/MainWindow.qml" line="2958"/>
         <source>确定要将镜像存储路径更改为：%1 更改后，新导入的镜像将存储在新路径中。</source>
         <oldsource>确定要将镜像存储路径更改为：
 
@@ -3052,17 +3140,17 @@
         <translation type="vanished">ตรวจสอบการอัปเดต</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="2955"/>
+        <location filename="qml/MainWindow.qml" line="3083"/>
         <source>当前已经是最新版本</source>
         <translation>เวอร์ชันปัจจุบันเป็นเวอร์ชันล่าสุดแล้ว</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="2999"/>
+        <location filename="qml/MainWindow.qml" line="3127"/>
         <source>正在重启主机...</source>
         <translation>กำลังรีสตาร์ทโฮสต์...</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="3032"/>
+        <location filename="qml/MainWindow.qml" line="3160"/>
         <source>正在重置主机...</source>
         <translation>กำลังรีเซ็ตโฮสต์...</translation>
     </message>
@@ -3071,27 +3159,27 @@
         <translation type="vanished">กำลังสร้างเครื่องบนคลาวด์...</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="3177"/>
+        <location filename="qml/MainWindow.qml" line="3305"/>
         <source>正在删除云机...</source>
         <translation>กำลังลบเครื่องเสมือน...</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="3211"/>
+        <location filename="qml/MainWindow.qml" line="3339"/>
         <source>正在重启云机...</source>
         <translation>กำลังรีสตาร์ทคลาวด์แมชชีน...</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="3244"/>
+        <location filename="qml/MainWindow.qml" line="3372"/>
         <source>正在重置云机...</source>
         <translation>กำลังรีเซ็ตเครื่องคลาวด์...</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="3277"/>
+        <location filename="qml/MainWindow.qml" line="3405"/>
         <source>正在启动云机...</source>
         <translation>กำลังเริ่มต้นคลาวด์แมชชีน...</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="3310"/>
+        <location filename="qml/MainWindow.qml" line="3438"/>
         <source>正在停止云机...</source>
         <translation>กำลังหยุดคลาวด์แมชชีน...</translation>
     </message>
@@ -3114,12 +3202,12 @@
         <translation>เลือกเครื่องเสมือนอย่างน้อย 2 เครื่อง</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="478"/>
+        <location filename="qml/MainWindow.qml" line="495"/>
         <source>显示主面板</source>
         <translation>แสดงแผงหลัก</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="484"/>
+        <location filename="qml/MainWindow.qml" line="501"/>
         <source>退出</source>
         <translation>ออก</translation>
     </message>
@@ -3128,7 +3216,7 @@
         <translation type="vanished">ปิด</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="2050"/>
+        <location filename="qml/MainWindow.qml" line="2126"/>
         <source>是否退出</source>
         <translation>是否ออกจากระบบ</translation>
     </message>
@@ -3145,7 +3233,7 @@
         <translation type="vanished">ปิดเครื่องแล้ว</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="1877"/>
+        <location filename="qml/MainWindow.qml" line="1947"/>
         <source>云机</source>
         <translation>คลาวด์โฟน</translation>
     </message>
@@ -3154,32 +3242,32 @@
         <translation type="obsolete">Magic Box Mall</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="2242"/>
+        <location filename="qml/MainWindow.qml" line="2370"/>
         <source>全选</source>
         <translation>เลือกทั้งหมด</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="2259"/>
+        <location filename="qml/MainWindow.qml" line="2387"/>
         <source>反选</source>
         <translation>เลือกกลับด้าน</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="2269"/>
+        <location filename="qml/MainWindow.qml" line="2397"/>
         <source>您还未勾选云手机</source>
         <translation>คุณยังไม่ได้เลือก Cloud Phone</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="2274"/>
+        <location filename="qml/MainWindow.qml" line="2402"/>
         <source>没有可以反选的云手机</source>
         <translation>ไม่มีเครื่องมือ Cloud Phone ที่สามารถเลิกเลือกได้</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="2292"/>
+        <location filename="qml/MainWindow.qml" line="2420"/>
         <source>已选</source>
         <translation>เลือกแล้ว</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="2302"/>
+        <location filename="qml/MainWindow.qml" line="2430"/>
         <source>取消选择</source>
         <translation>ยกเลิกการเลือก</translation>
     </message>
@@ -3188,22 +3276,22 @@
         <translation type="vanished">การกรองด่วน</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="2348"/>
+        <location filename="qml/MainWindow.qml" line="2476"/>
         <source>同步操作</source>
         <translation>การดำเนินการแบบซิงโครนัส</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="2357"/>
+        <location filename="qml/MainWindow.qml" line="2485"/>
         <source>是否要关闭同步操作模式</source>
         <translation>ต้องการปิดโหมดการซิงค์หรือไม่</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="2411"/>
+        <location filename="qml/MainWindow.qml" line="2539"/>
         <source>开启同步操作，则操作任意一台云手机的同时可同步操作至其它勾选的云手机</source>
         <translation>เปิดใช้งานการซิงค์ เมื่อใช้งานเครื่องมือใดเครื่องมือหนึ่งก็จะซิงค์ไปยังเครื่องมืออื่นๆ ที่เลือกไว้</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="2322"/>
+        <location filename="qml/MainWindow.qml" line="2450"/>
         <source>批量操作</source>
         <translation>การดำเนินการแบบกลุ่ม</translation>
     </message>
@@ -3212,12 +3300,12 @@
         <translation type="vanished">การจัดการอุปกรณ์</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="2460"/>
+        <location filename="qml/MainWindow.qml" line="2588"/>
         <source>刷新</source>
         <translation>รีเฟรช</translation>
     </message>
     <message>
-        <location filename="qml/MainWindow.qml" line="2489"/>
+        <location filename="qml/MainWindow.qml" line="2617"/>
         <source>视图模式</source>
         <translation>โหมดมุมมอง</translation>
     </message>
@@ -3325,11 +3413,106 @@
     </message>
 </context>
 <context>
+    <name>OneKeyNewDevicePopup</name>
+    <message>
+        <location filename="qml/OneKeyNewDevicePopup.qml" line="114"/>
+        <source>一键新机</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/OneKeyNewDevicePopup.qml" line="158"/>
+        <source>指定机型</source>
+        <translation type="unfinished">ระบุรุ่น</translation>
+    </message>
+    <message>
+        <location filename="qml/OneKeyNewDevicePopup.qml" line="171"/>
+        <source>品牌</source>
+        <translation type="unfinished">แบรนด์</translation>
+    </message>
+    <message>
+        <location filename="qml/OneKeyNewDevicePopup.qml" line="203"/>
+        <source>机型</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>注意事项: </source>
+        <translation type="obsolete">ข้อควรระวัง:</translation>
+    </message>
+    <message>
+        <location filename="qml/OneKeyNewDevicePopup.qml" line="151"/>
+        <source>一键新机将清除云手机上的所有数据，云手机参数会重新生成，请谨慎操作！</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/OneKeyNewDevicePopup.qml" line="182"/>
+        <location filename="qml/OneKeyNewDevicePopup.qml" line="247"/>
+        <location filename="qml/OneKeyNewDevicePopup.qml" line="542"/>
+        <location filename="qml/OneKeyNewDevicePopup.qml" line="543"/>
+        <source>未选定</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/OneKeyNewDevicePopup.qml" line="228"/>
+        <source>取消</source>
+        <translation type="unfinished">ยกเลิก</translation>
+    </message>
+    <message>
+        <location filename="qml/OneKeyNewDevicePopup.qml" line="234"/>
+        <source>确定</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/OneKeyNewDevicePopup.qml" line="261"/>
+        <source>找不到对应的 ADI 配置</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/OneKeyNewDevicePopup.qml" line="283"/>
+        <source>未找到有效的云机</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/OneKeyNewDevicePopup.qml" line="272"/>
+        <source>找不到对应的 ADI 文件路径</source>
+        <translation type="unfinished">ไม่พบเส้นทางไฟล์ ADI ที่ตรงกัน</translation>
+    </message>
+    <message>
+        <location filename="qml/OneKeyNewDevicePopup.qml" line="305"/>
+        <source>未找到有效的主机 IP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/OneKeyNewDevicePopup.qml" line="884"/>
+        <source>正在为主机 %1 导入 ADI...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/OneKeyNewDevicePopup.qml" line="886"/>
+        <source>ADI 导入中...</source>
+        <translation type="unfinished">กำลังนำเข้า ADI...</translation>
+    </message>
+    <message>
+        <location filename="qml/OneKeyNewDevicePopup.qml" line="839"/>
+        <source>正在执行一键新机...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/OneKeyNewDevicePopup.qml" line="858"/>
+        <source>一键新机失败</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/OneKeyNewDevicePopup.qml" line="862"/>
+        <source>解析响应失败</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PadWindow</name>
     <message>
         <location filename="qml/PadWindow.qml" line="305"/>
-        <location filename="qml/PadWindow.qml" line="520"/>
-        <location filename="qml/PadWindow.qml" line="2688"/>
+        <location filename="qml/PadWindow.qml" line="531"/>
+        <location filename="qml/PadWindow.qml" line="2711"/>
         <source>系统提示</source>
         <translation>ระบบแจ้งเตือน</translation>
     </message>
@@ -3348,11 +3531,11 @@
     </message>
     <message>
         <location filename="qml/PadWindow.qml" line="311"/>
-        <location filename="qml/PadWindow.qml" line="1717"/>
-        <location filename="qml/PadWindow.qml" line="1732"/>
-        <location filename="qml/PadWindow.qml" line="1746"/>
-        <location filename="qml/PadWindow.qml" line="1760"/>
-        <location filename="qml/PadWindow.qml" line="2691"/>
+        <location filename="qml/PadWindow.qml" line="1740"/>
+        <location filename="qml/PadWindow.qml" line="1755"/>
+        <location filename="qml/PadWindow.qml" line="1769"/>
+        <location filename="qml/PadWindow.qml" line="1783"/>
+        <location filename="qml/PadWindow.qml" line="2714"/>
         <source>确定</source>
         <translation>ตกลง</translation>
     </message>
@@ -3421,124 +3604,124 @@
         <translation type="vanished">เขย่า</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="1712"/>
+        <location filename="qml/PadWindow.qml" line="1735"/>
         <source>确定要重启云机？</source>
         <translation>ยืนยันการรีสตาร์ทเครื่องเสมือนบนคลาวด์ใช่หรือไม่?</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="1713"/>
-        <location filename="qml/PadWindow.qml" line="1728"/>
-        <location filename="qml/PadWindow.qml" line="1745"/>
-        <location filename="qml/PadWindow.qml" line="1759"/>
+        <location filename="qml/PadWindow.qml" line="1736"/>
+        <location filename="qml/PadWindow.qml" line="1751"/>
+        <location filename="qml/PadWindow.qml" line="1768"/>
+        <location filename="qml/PadWindow.qml" line="1782"/>
         <source>取消</source>
         <translation>ยกเลิก</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="1727"/>
+        <location filename="qml/PadWindow.qml" line="1750"/>
         <source>一键新机将清除云手机上的所有数据，云手机参数会重新生成，请谨慎操作！</source>
         <oldsource>确定要一键新机？云机将清空数据，变更设备ID及设备所有唯一标识(标准云机将随机更换机型，高端云机将更换相同机型)</oldsource>
         <translation type="unfinished">ยืนยันที่จะรีเซ็ตเครื่องใหม่ด้วยการคลิกเดียวใช่หรือไม่? เครื่องเสมือนจะล้างข้อมูล เปลี่ยน ID อุปกรณ์ และตัวระบุที่ไม่ซ้ำกันของอุปกรณ์ (เครื่องเสมือนมาตรฐานจะเปลี่ยนรุ่นแบบสุ่ม เครื่องเสมือนระดับไฮเอนด์จะเปลี่ยนเป็นรุ่นเดียวกัน)</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="1743"/>
+        <location filename="qml/PadWindow.qml" line="1766"/>
         <source>当前云机换机后，将会清空云机全部数据，无法恢复，确定进行换机？</source>
         <translation>เปลี่ยนเครื่องเสมือนคลาวด์แล้ว ข้อมูลทั้งหมดในเครื่องเสมือนคลาวด์จะถูกล้าง และไม่สามารถกู้คืนได้ ยืนยันการเปลี่ยนเครื่องหรือไม่？</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="1757"/>
+        <location filename="qml/PadWindow.qml" line="1780"/>
         <source>确定要关闭云手机吗？</source>
         <oldsource>确定要重置云机？云机数据将被清空，请谨慎选择！</oldsource>
         <translation type="unfinished">ยืนยันการรีเซ็ตเครื่อง Cloud หรือไม่? ข้อมูลเครื่อง Cloud จะถูกล้างทั้งหมด โปรดเลือกอย่างระมัดระวัง!</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="1856"/>
+        <location filename="qml/PadWindow.qml" line="1879"/>
         <source>返回</source>
         <translation>กลับ</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="1903"/>
+        <location filename="qml/PadWindow.qml" line="1926"/>
         <source>摄像头推流</source>
         <translation>สตรีมกล้อง</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="1934"/>
+        <location filename="qml/PadWindow.qml" line="1957"/>
         <source>摄像头</source>
         <translation>กล้อง</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="2173"/>
+        <location filename="qml/PadWindow.qml" line="2196"/>
         <source>选择上传视频</source>
         <translation>เลือกวิดีโอที่จะอัปโหลด</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="2425"/>
+        <location filename="qml/PadWindow.qml" line="2448"/>
         <source>新增按键</source>
         <translation>ปุ่มใหม่</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="2429"/>
+        <location filename="qml/PadWindow.qml" line="2452"/>
         <source>使用“鼠标左键”新增按键</source>
         <translation>ใช้ &quot;ปุ่มซ้ายของเมาส์&quot; เพื่อเพิ่มปุ่ม</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="2464"/>
+        <location filename="qml/PadWindow.qml" line="2487"/>
         <source>方向摇杆</source>
         <translation>จอยสติ๊กทิศทาง</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="2468"/>
+        <location filename="qml/PadWindow.qml" line="2491"/>
         <source>使用“AWSD”控制人物移动</source>
         <translation>ใช้ &quot;AWSD&quot; เพื่อควบคุมการเคลื่อนไหวของตัวละคร</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="2489"/>
+        <location filename="qml/PadWindow.qml" line="2512"/>
         <source>键盘映射开关</source>
         <translation>สวิตช์การแมปคีย์บอร์ด</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="2519"/>
+        <location filename="qml/PadWindow.qml" line="2542"/>
         <source>还原</source>
         <translation>กู้คืน</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="2531"/>
+        <location filename="qml/PadWindow.qml" line="2554"/>
         <source>保存</source>
         <translation>บันทึก</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="2711"/>
+        <location filename="qml/PadWindow.qml" line="2734"/>
         <source>正在重启云机...</source>
         <translation type="unfinished">กำลังรีสตาร์ทคลาวด์แมชชีน...</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="2725"/>
+        <location filename="qml/PadWindow.qml" line="2748"/>
         <source>重启云机成功</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="2746"/>
+        <location filename="qml/PadWindow.qml" line="2769"/>
         <source>正在停止云机...</source>
         <oldsource>正在重置云机...</oldsource>
         <translation type="unfinished">กำลังรีเซ็ตเครื่องคลาวด์...</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="2760"/>
+        <location filename="qml/PadWindow.qml" line="2783"/>
         <source>关闭云机成功</source>
         <oldsource>重置云机成功</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="2781"/>
+        <location filename="qml/PadWindow.qml" line="2804"/>
         <source>正在一键新机...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="2795"/>
+        <location filename="qml/PadWindow.qml" line="2818"/>
         <source>一键新机成功</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="1903"/>
+        <location filename="qml/PadWindow.qml" line="1926"/>
         <source>无人直播推流</source>
         <translation>ไลฟ์สตรีมแบบไม่มีผู้ดำเนินการ</translation>
     </message>
@@ -3553,7 +3736,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="1090"/>
+        <location filename="qml/PadWindow.qml" line="1113"/>
         <source>复制成功</source>
         <translation>คัดลอกสำเร็จ</translation>
     </message>
@@ -3566,110 +3749,110 @@
         <translation type="vanished">กำลังซิงค์</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="1641"/>
+        <location filename="qml/PadWindow.qml" line="1664"/>
         <source>选择上传文件</source>
         <translation>เลือกไฟล์ที่จะอัปโหลด</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="1711"/>
-        <location filename="qml/PadWindow.qml" line="1726"/>
-        <location filename="qml/PadWindow.qml" line="1742"/>
-        <location filename="qml/PadWindow.qml" line="1756"/>
+        <location filename="qml/PadWindow.qml" line="1734"/>
+        <location filename="qml/PadWindow.qml" line="1749"/>
+        <location filename="qml/PadWindow.qml" line="1765"/>
+        <location filename="qml/PadWindow.qml" line="1779"/>
         <source>操作确认</source>
         <translation type="unfinished">การยืนยันการดำเนินการ</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="1999"/>
+        <location filename="qml/PadWindow.qml" line="2022"/>
         <source>未发现摄像头，无法开启</source>
         <translation>ไม่พบกล้อง ไม่สามารถเปิดใช้งานได้</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="2013"/>
+        <location filename="qml/PadWindow.qml" line="2036"/>
         <source>麦克风</source>
         <translation>ไมโครโฟน</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="2078"/>
+        <location filename="qml/PadWindow.qml" line="2101"/>
         <source>未发现麦克风，无法开启</source>
         <translation>ไม่พบไมโครโฟน ไม่สามารถเปิดใช้งานได้</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="2102"/>
+        <location filename="qml/PadWindow.qml" line="2125"/>
         <source>请在列表中选择要推流的视频文件</source>
         <translation>กรุณาเลือกไฟล์วิดีโอที่ต้องการสตรีมจากรายการ</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="2142"/>
+        <location filename="qml/PadWindow.qml" line="2165"/>
         <source>结束</source>
         <translation>สิ้นสุด</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="2157"/>
+        <location filename="qml/PadWindow.qml" line="2180"/>
         <source>全部视频(</source>
         <oldsource>全部视频</oldsource>
         <translation>ทั้งหมดวิดีโอ (</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="2226"/>
+        <location filename="qml/PadWindow.qml" line="2249"/>
         <source>开启推流</source>
         <translation>เริ่มสตรีม</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="2235"/>
+        <location filename="qml/PadWindow.qml" line="2258"/>
         <source>推流中</source>
         <translation>กำลังสตรีม</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="2247"/>
+        <location filename="qml/PadWindow.qml" line="2270"/>
         <source>删除</source>
         <translation>ลบ</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="2171"/>
+        <location filename="qml/PadWindow.qml" line="2194"/>
         <source>上传视频</source>
         <translation>อัปโหลดวิดีโอ</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="1634"/>
+        <location filename="qml/PadWindow.qml" line="1657"/>
         <source>选择安装文件</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="2274"/>
+        <location filename="qml/PadWindow.qml" line="2297"/>
         <source>连接命令</source>
         <translation>คำสั่งเชื่อมต่อ</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="2285"/>
-        <location filename="qml/PadWindow.qml" line="2315"/>
-        <location filename="qml/PadWindow.qml" line="2347"/>
+        <location filename="qml/PadWindow.qml" line="2308"/>
+        <location filename="qml/PadWindow.qml" line="2338"/>
+        <location filename="qml/PadWindow.qml" line="2370"/>
         <source>复制</source>
         <translation>คัดลอก</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="2289"/>
-        <location filename="qml/PadWindow.qml" line="2319"/>
-        <location filename="qml/PadWindow.qml" line="2351"/>
+        <location filename="qml/PadWindow.qml" line="2312"/>
+        <location filename="qml/PadWindow.qml" line="2342"/>
+        <location filename="qml/PadWindow.qml" line="2374"/>
         <source>已复制到剪贴板</source>
         <translation>คัดลอกไปยังคลิปบอร์ดแล้ว</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="2304"/>
+        <location filename="qml/PadWindow.qml" line="2327"/>
         <source>连接密钥</source>
         <translation>กุญแจการเชื่อมต่อ</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="2336"/>
+        <location filename="qml/PadWindow.qml" line="2359"/>
         <source>ADB地址</source>
         <translation>ที่อยู่ ADB</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="2364"/>
+        <location filename="qml/PadWindow.qml" line="2387"/>
         <source>ADB过期时间</source>
         <translation>เวลาหมดอายุของ ADB</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="2379"/>
+        <location filename="qml/PadWindow.qml" line="2402"/>
         <source>开启ADB</source>
         <translation>เปิดใช้งาน ADB</translation>
     </message>
@@ -3682,10 +3865,10 @@
         <translation type="obsolete">รหัสผ่านที่ป้อนไม่ตรงกันทั้งสองครั้ง</translation>
     </message>
     <message>
-        <location filename="qml/PadWindow.qml" line="2577"/>
-        <location filename="qml/PadWindow.qml" line="2578"/>
-        <location filename="qml/PadWindow.qml" line="2579"/>
-        <location filename="qml/PadWindow.qml" line="2580"/>
+        <location filename="qml/PadWindow.qml" line="2600"/>
+        <location filename="qml/PadWindow.qml" line="2601"/>
+        <location filename="qml/PadWindow.qml" line="2602"/>
+        <location filename="qml/PadWindow.qml" line="2603"/>
         <source>未开启</source>
         <translation>ไม่เปิดใช้งาน</translation>
     </message>
@@ -4262,7 +4445,7 @@
         <translation type="obsolete">เวอร์ชันของอิมเมจ</translation>
     </message>
     <message>
-        <location filename="qml/TemplateListView.qml" line="253"/>
+        <location filename="qml/TemplateListView.qml" line="255"/>
         <source>Android版本</source>
         <translation>เวอร์ชัน Android</translation>
     </message>
@@ -4281,39 +4464,39 @@
         <translation>ทั้งหมด</translation>
     </message>
     <message>
-        <location filename="qml/TemplateListView.qml" line="222"/>
+        <location filename="qml/TemplateListView.qml" line="224"/>
         <source>品牌</source>
         <translation>แบรนด์</translation>
     </message>
     <message>
-        <location filename="qml/TemplateListView.qml" line="233"/>
+        <location filename="qml/TemplateListView.qml" line="235"/>
         <source>机型</source>
         <translation>รุ่น</translation>
     </message>
     <message>
-        <location filename="qml/TemplateListView.qml" line="243"/>
+        <location filename="qml/TemplateListView.qml" line="245"/>
         <source>屏幕分辨率</source>
         <translation>ความละเอียดหน้าจอ</translation>
     </message>
     <message>
-        <location filename="qml/TemplateListView.qml" line="263"/>
+        <location filename="qml/TemplateListView.qml" line="265"/>
         <source>导入时间</source>
         <translation>นำเข้าเวลา</translation>
     </message>
     <message>
-        <location filename="qml/TemplateListView.qml" line="273"/>
+        <location filename="qml/TemplateListView.qml" line="275"/>
         <source>操作</source>
         <translation>การดำเนินการ</translation>
     </message>
     <message>
-        <location filename="qml/TemplateListView.qml" line="335"/>
-        <location filename="qml/TemplateListView.qml" line="359"/>
-        <location filename="qml/TemplateListView.qml" line="381"/>
+        <location filename="qml/TemplateListView.qml" line="343"/>
+        <location filename="qml/TemplateListView.qml" line="367"/>
+        <location filename="qml/TemplateListView.qml" line="389"/>
         <source>复制成功</source>
         <translation>คัดลอกสำเร็จ</translation>
     </message>
     <message>
-        <location filename="qml/TemplateListView.qml" line="439"/>
+        <location filename="qml/TemplateListView.qml" line="447"/>
         <source>删除</source>
         <translation>ลบ</translation>
     </message>
@@ -4341,29 +4524,29 @@
         <translation type="obsolete">กำหนดค่า DNS เอง</translation>
     </message>
     <message>
-        <location filename="qml/UpgradeCloudPhonePopup.qml" line="68"/>
-        <location filename="qml/UpgradeCloudPhonePopup.qml" line="693"/>
-        <location filename="qml/UpgradeCloudPhonePopup.qml" line="745"/>
+        <location filename="qml/UpgradeCloudPhonePopup.qml" line="72"/>
+        <location filename="qml/UpgradeCloudPhonePopup.qml" line="964"/>
+        <location filename="qml/UpgradeCloudPhonePopup.qml" line="1017"/>
         <source>镜像上传中...</source>
         <translation>กำลังอัปโหลดภาพ...</translation>
     </message>
     <message>
-        <location filename="qml/UpgradeCloudPhonePopup.qml" line="75"/>
+        <location filename="qml/UpgradeCloudPhonePopup.qml" line="79"/>
         <source>镜像加载中...</source>
         <translation>กำลังโหลดภาพ...</translation>
     </message>
     <message>
-        <location filename="qml/UpgradeCloudPhonePopup.qml" line="88"/>
+        <location filename="qml/UpgradeCloudPhonePopup.qml" line="94"/>
         <source>创建中...</source>
         <translation>กำลังสร้าง...</translation>
     </message>
     <message>
-        <location filename="qml/UpgradeCloudPhonePopup.qml" line="90"/>
+        <location filename="qml/UpgradeCloudPhonePopup.qml" line="96"/>
         <source>创建失败...</source>
         <translation>สร้างล้มเหลว...</translation>
     </message>
     <message>
-        <location filename="qml/UpgradeCloudPhonePopup.qml" line="94"/>
+        <location filename="qml/UpgradeCloudPhonePopup.qml" line="100"/>
         <source>镜像加载成功</source>
         <translation>โหลดภาพสำเร็จ</translation>
     </message>
@@ -4372,51 +4555,71 @@
         <translation type="obsolete">กรุณาใส่ที่อยู่ DNS</translation>
     </message>
     <message>
-        <location filename="qml/UpgradeCloudPhonePopup.qml" line="189"/>
+        <location filename="qml/UpgradeCloudPhonePopup.qml" line="215"/>
         <source>修改镜像</source>
         <oldsource>创建云机</oldsource>
         <translation>แก้ไขอิมเมจ</translation>
     </message>
     <message>
-        <location filename="qml/UpgradeCloudPhonePopup.qml" line="212"/>
+        <location filename="qml/UpgradeCloudPhonePopup.qml" line="238"/>
         <source>云机名称：%1</source>
         <translation>ชื่อเครื่องบนคลาวด์: %1</translation>
     </message>
     <message>
-        <location filename="qml/UpgradeCloudPhonePopup.qml" line="217"/>
+        <location filename="qml/UpgradeCloudPhonePopup.qml" line="243"/>
         <source>镜像版本：%1</source>
         <translation>เวอร์ชันของอิมเมจ: %1</translation>
     </message>
     <message>
-        <location filename="qml/UpgradeCloudPhonePopup.qml" line="222"/>
+        <location filename="qml/UpgradeCloudPhonePopup.qml" line="248"/>
         <source>Android版本：Android %1</source>
         <oldsource>Android版本：%1</oldsource>
         <translation>Android เวอร์ชัน: Android %1</translation>
     </message>
     <message>
-        <location filename="qml/UpgradeCloudPhonePopup.qml" line="362"/>
+        <location filename="qml/UpgradeCloudPhonePopup.qml" line="312"/>
+        <source>指定机型</source>
+        <translation type="unfinished">ระบุรุ่น</translation>
+    </message>
+    <message>
+        <location filename="qml/UpgradeCloudPhonePopup.qml" line="325"/>
+        <source>品牌</source>
+        <translation type="unfinished">แบรนด์</translation>
+    </message>
+    <message>
+        <location filename="qml/UpgradeCloudPhonePopup.qml" line="356"/>
+        <source>机型</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/UpgradeCloudPhonePopup.qml" line="491"/>
         <source>注意事项: </source>
         <translation>ข้อควรระวัง:</translation>
     </message>
     <message>
-        <location filename="qml/UpgradeCloudPhonePopup.qml" line="378"/>
+        <location filename="qml/UpgradeCloudPhonePopup.qml" line="507"/>
         <source>1、升级到相同 Android 版本时，将保留现有数据。</source>
         <oldsource>1、同Android版本升级不清理数据</oldsource>
         <translation>1. เมื่ออัปเกรดไปยังเวอร์ชัน Android เดียวกัน ข้อมูลที่มีอยู่จะถูกเก็บไว้</translation>
     </message>
     <message>
-        <location filename="qml/UpgradeCloudPhonePopup.qml" line="386"/>
+        <location filename="qml/UpgradeCloudPhonePopup.qml" line="515"/>
         <source>2、升级到不同 Android 版本时，将清除所有数据。</source>
         <oldsource>2、跨Android版本升级清理数据</oldsource>
         <translation>2. เมื่ออัปเกรดเป็นเวอร์ชัน Android ที่แตกต่างกัน ข้อมูลทั้งหมดจะถูกล้าง</translation>
     </message>
     <message>
-        <location filename="qml/UpgradeCloudPhonePopup.qml" line="639"/>
+        <location filename="qml/UpgradeCloudPhonePopup.qml" line="618"/>
+        <source>找不到对应的 ADI 文件路径</source>
+        <translation type="unfinished">ไม่พบเส้นทางไฟล์ ADI ที่ตรงกัน</translation>
+    </message>
+    <message>
+        <location filename="qml/UpgradeCloudPhonePopup.qml" line="910"/>
         <source>正在升级云机镜像...</source>
         <translation>กำลังอัพเกรดอิมเมจเครื่องเสมือน...</translation>
     </message>
     <message>
-        <location filename="qml/UpgradeCloudPhonePopup.qml" line="845"/>
+        <location filename="qml/UpgradeCloudPhonePopup.qml" line="1298"/>
         <source>ADI 导入中...</source>
         <translation>กำลังนำเข้า ADI...</translation>
     </message>
@@ -4425,7 +4628,7 @@
         <translation type="obsolete">ที่อยู่โฮสต์: %1 (สามารถสร้างได้สูงสุด %2 เครื่อง, ปัจจุบันสามารถสร้างได้ %3 เครื่อง)</translation>
     </message>
     <message>
-        <location filename="qml/UpgradeCloudPhonePopup.qml" line="227"/>
+        <location filename="qml/UpgradeCloudPhonePopup.qml" line="253"/>
         <source>选择镜像</source>
         <translation>เลือกกระจก</translation>
     </message>
@@ -4466,17 +4669,17 @@
         <translation type="obsolete">จะสร้างเครื่องบนคลาวด์จำนวน %1 เครื่อง：</translation>
     </message>
     <message>
-        <location filename="qml/UpgradeCloudPhonePopup.qml" line="407"/>
+        <location filename="qml/UpgradeCloudPhonePopup.qml" line="536"/>
         <source>镜像上传中..</source>
         <translation>กำลังอัปโหลดรูปภาพ..</translation>
     </message>
     <message>
-        <location filename="qml/UpgradeCloudPhonePopup.qml" line="438"/>
+        <location filename="qml/UpgradeCloudPhonePopup.qml" line="567"/>
         <source>取消</source>
         <translation>ยกเลิก</translation>
     </message>
     <message>
-        <location filename="qml/UpgradeCloudPhonePopup.qml" line="444"/>
+        <location filename="qml/UpgradeCloudPhonePopup.qml" line="573"/>
         <source>确定</source>
         <translation>ตกลง</translation>
     </message>
@@ -4497,8 +4700,8 @@
         <translation type="obsolete">ที่อยู่ DNS ไม่ถูกต้อง:</translation>
     </message>
     <message>
-        <location filename="qml/UpgradeCloudPhonePopup.qml" line="568"/>
-        <location filename="qml/UpgradeCloudPhonePopup.qml" line="599"/>
+        <location filename="qml/UpgradeCloudPhonePopup.qml" line="790"/>
+        <location filename="qml/UpgradeCloudPhonePopup.qml" line="822"/>
         <source> (已上传)</source>
         <translation>(อัปโหลดแล้ว)</translation>
     </message>

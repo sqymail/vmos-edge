@@ -30,14 +30,26 @@
 
 #include "sdk_wrapper/screenshot_image.h"
 #include "sdk_wrapper/video_render_item.h"
+#include "sdk_wrapper/video_render_item_ex.h"
+// #include "sdk_wrapper/armcloud_engine_wrapper.h"
+// #include "sdk_wrapper/session_observer_wrapper.h"
+// #include "sdk_wrapper/batch_control_observer_wrapper.h"
+// #include "sdk_wrapper/batch_control_video_wrapper.h"
+// #include "sdk_wrapper/group_control_wrapper.h"
+
 #include "downloadhandler.h"
+
+// #include "devicelistmodel.h"
 #include "deviceproxymodel.h"
 #include "selectedlistmodel.h"
 #include "treemodel.h"
 #include "treeproxymodel.h"
+// #include "authtreemodel.h"
 #include "levelproxymodel.h"
 #include "helper/TemplateModel.h"
+
 #include "scrcpy_wrapper/devicemanager.h"
+// #include "scrcpy_wrapper/scrcpy_controller.h"  // 已移除，改用DeviceManager
 #include "scrcpy_wrapper/groupcontroller.h"
 
 
@@ -108,11 +120,18 @@ int main(int argc, char *argv[])
     qmlRegisterType<NetworkCallable>(uri, major, minor, "NetworkCallable");
     qmlRegisterType<NetworkParams>(uri, major, minor, "NetworkParams");
     qmlRegisterType<VideoRenderItem>(uri, major, minor, "VideoRenderItem");
+    qmlRegisterType<VideoRenderItemEx>(uri, major, minor, "VideoRenderItemEx");
+    // qmlRegisterType<SessionObserverWrapper>(uri, major, minor, "SessionObserver");
+    // qmlRegisterType<DeviceListModel>(uri, major, minor, "DeviceListModel");
     qmlRegisterType<DeviceProxyModel>(uri, major, minor, "DeviceProxyModel");
     qmlRegisterType<ScreenshotRenderItem>(uri, major, minor, "ScreenshotRenderItem");
+    // qmlRegisterType<BatchControlVideoWrapper>(uri, major, minor, "BatchControlVideo");
+    // qmlRegisterType<BatchControlObserverWrapper>(uri, major, minor, "BatchControlObserver");
+    // qmlRegisterType<GroupControlWrapper>(uri, major, minor, "GroupControl");
     qmlRegisterType<TreeModel>(uri, major, minor, "TreeModel");
     qmlRegisterType<DeviceScanner>(uri, major, minor, "DeviceScanner");
     qmlRegisterType<DeviceManager>(uri, major, minor, "DeviceManager");
+    // qmlRegisterType<ScrcpyController>(uri, major, minor, "ScrcpyController");  // 已移除，改用DeviceManager
     qmlRegisterType<LevelProxyModel>(uri, major, minor, "LevelProxyModel");
     qmlRegisterType<ImagesModel>(uri, major, minor, "ImagesModel");
     qmlRegisterType<TemplateModel>(uri, major, minor, "TemplateModel");
@@ -125,6 +144,13 @@ int main(int argc, char *argv[])
     qDebug() << QSslSocket::sslLibraryVersionString();
 
     KeyMapperModel keymapperModel;
+    // DeviceListModel baseModel;
+    // DeviceProxyModel proxyModel;
+    // proxyModel.setSourceModel(&baseModel);
+    // proxyModel.setSortRole(DeviceRoles::PadNameRole);
+    // proxyModel.sort(0);
+
+    // AuthTreeModel authTreeModel;
     TreeModel treeModel;
     TreeProxyModel treeProxyModel;
     treeProxyModel.setSourceModel(&treeModel);
@@ -133,6 +159,7 @@ int main(int argc, char *argv[])
 
     SelectedListModel selectedListModel;
     selectedListModel.setSourceModel(&treeModel);
+    selectedListModel.setProxyModel(&treeProxyModel);
     DeviceProxyModel proxyModel;
     proxyModel.setSourceModel(&selectedListModel);
     proxyModel.setSortRole(DeviceRoles::NameRole);
@@ -150,14 +177,18 @@ int main(int argc, char *argv[])
     TranslateHelper::getInstance()->init(&engine);
     engine.rootContext()->setContextProperty("channelName", channel);
     engine.rootContext()->setContextProperty("Network", Network::getInstance());
+    // engine.rootContext()->setContextProperty("ArmcloudEngine", ArmcloudEngineWrapper::getInstance());
     engine.rootContext()->setContextProperty("Utils", Utils::getInstance());
+    // engine.rootContext()->setContextProperty("baseModel", &baseModel);
     engine.rootContext()->setContextProperty("proxyModel", &proxyModel);
     engine.rootContext()->setContextProperty("TranslateHelper", TranslateHelper::getInstance());
     engine.rootContext()->setContextProperty("SettingsHelper", SettingsHelper::getInstance());
+    // engine.rootContext()->setContextProperty("groupControl", GroupControlWrapper::getInstance());
     engine.rootContext()->setContextProperty("ReportHelper", ReportHelper::getInstance());
     engine.rootContext()->setContextProperty("treeModel", &treeModel);
     engine.rootContext()->setContextProperty("treeProxyModel", &treeProxyModel);
     engine.rootContext()->setContextProperty("selectedListModel", &selectedListModel);
+    // engine.rootContext()->setContextProperty("authTreeModel", &authTreeModel);
     engine.rootContext()->setContextProperty("keymapperModel", &keymapperModel);
     engine.rootContext()->setContextProperty("windowSizeHelper", &windowSizeHelper);
     engine.rootContext()->setContextProperty("accountModel", &accountModel);

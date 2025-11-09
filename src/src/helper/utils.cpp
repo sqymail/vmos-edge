@@ -60,3 +60,21 @@ QString Utils::getClipboradText()
 {
     return QGuiApplication::clipboard()->text();
 }
+
+void Utils::executeCommandInTerminal(const QString& command)
+{
+#ifdef Q_OS_WIN
+    // 在Windows上，使用cmd /k来打开cmd窗口并执行命令
+    QProcess::startDetached("cmd", QStringList() << "/k" << command);
+#elif defined(Q_OS_MAC)
+    // 在macOS上，使用Terminal.app来执行命令
+    QProcess::startDetached("osascript", QStringList() << "-e" << QString("tell application \"Terminal\" to do script \"%1\"").arg(command));
+#elif defined(Q_OS_LINUX)
+    // 在Linux上，使用gnome-terminal或xterm
+    QString terminal = "gnome-terminal";
+    if (QProcess::execute("which", QStringList() << "gnome-terminal") != 0) {
+        terminal = "xterm";
+    }
+    QProcess::startDetached(terminal, QStringList() << "-e" << "bash" << "-c" << QString("%1; exec bash").arg(command));
+#endif
+}

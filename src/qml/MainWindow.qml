@@ -410,6 +410,23 @@ FluWindow {
         return name
     }
 
+    function openAdbCommandLine(deviceAddress) {
+        // 构建adb connect命令
+        // 优先使用应用程序目录下的adb.exe，如果不存在则使用PATH中的adb
+        var adbPath = FluTools.getApplicationDirPath() + "/adb.exe"
+        var command
+        // 检查应用程序目录中是否有adb.exe，如果有则使用完整路径
+        if (Qt.platform.os === "windows") {
+            // Windows系统，使用完整路径或PATH中的adb
+            command = "\"" + adbPath + "\" connect " + deviceAddress
+        } else {
+            // 其他系统，使用PATH中的adb
+            command = "adb connect " + deviceAddress
+        }
+        // 使用Utils执行命令，打开cmd窗口并执行adb connect命令
+        Utils.executeCommandInTerminal(command)
+    }
+
     Connections{
         target: treeModel
 
@@ -539,6 +556,16 @@ FluWindow {
         //     }
     }
 
+    OneKeyNewDevicePopup{
+        id: oneKeyNewDevicePopup
+        onOneKeyNewDeviceResult: (hostIp, list) => {
+            treeModel.updateDeviceListV3(hostIp, list)
+        }
+        onOneKeyNewDeviceRequest: (hostIp, dbIds, adiName, adiPass) => {
+            reqOneKeyNewDeviceWithAdi(hostIp, dbIds, adiName, adiPass)
+        }
+    }
+
     ProxySettingsPopup{
         id: proxySettingsPopup
     }
@@ -549,6 +576,10 @@ FluWindow {
 
     BoxDetailPopup{
         id: boxDetailPopup
+    }
+
+    DeviceDetailPopup{
+        id: deviceDetailPopup
     }
 
     // 重命名窗口
@@ -828,6 +859,7 @@ FluWindow {
                 if(!checkAtLeastOne(podList, 3)){
                     return
                 }
+                
                 dialog.title = qsTr("操作确认")
                 dialog.message = qsTr("一键新机将清除云手机上的所有数据，云手机参数会重新生成，请谨慎操作！")
                 dialog.positiveText = qsTr("确定")
@@ -1352,7 +1384,16 @@ FluWindow {
                 }
 
                 Text{
-                    text: `(${modelData?.hostPadCount ?? 0})`
+                    text: {
+                        // 如果是主机节点，使用 modelData.hostPadCount（代理模型已经重写了这个属性来返回过滤后的数量）
+                        if (modelData?.itemType === TreeModel.TypeHost) {
+                            // modelData 是从代理模型的 model 复制过来的，所以 hostPadCount 已经是过滤后的数量
+                            // 这样当设备状态改变时，代理模型会触发 dataChanged，QML 绑定会自动更新
+                            return `(${modelData?.hostPadCount ?? 0})`
+                        }
+                        // 其他情况显示原始数量
+                        return `(${modelData?.hostPadCount ?? 0})`
+                    }
                     font.pixelSize: 13
                     color: "#666"
                 }
@@ -1703,20 +1744,23 @@ FluWindow {
             text:qsTr("一键新机")
             visible: deviceContextMenu.currentModel ? (deviceContextMenu.currentModel.state === "running" || deviceContextMenu.currentModel.state === "stopped") : false
             onClicked: {
-                dialog.title = qsTr("操作确认")
-                dialog.message = qsTr("一键新机将清除云手机上的所有数据，云手机参数会重新生成，请谨慎操作！")
-                dialog.positiveText = qsTr("确定")
-                dialog.negativeText = qsTr("取消")
-                dialog.showPrompt = false
-                dialog.onNegativeClickListener = function(){
-                    dialog.close()
-                }
-                dialog.buttonFlags = FluContentDialogType.PositiveButton | FluContentDialogType.NegativeButton
-                dialog.onPositiveClickListener = function(){
-                    reqOneKeyNewDevice(deviceContextMenu.currentModel.hostIp, [deviceContextMenu.currentModel.dbId])
-                    dialog.close()
-                }
-                dialog.open()
+                // 统一处理逻辑：即使是单云机，也按数组处理
+                var podList = [deviceContextMenu.currentModel]
+                
+                // 转换为 popup 需要的格式
+                var deviceList = podList.map(function(item) {
+                    return {
+                        name: item.name,
+                        displayName: item.displayName,
+                        hostIp: item.hostIp,
+                        hostId: item.hostId,
+                        dbId: item.dbId,
+                        image: item.image ? item.image.split(":")[0] : "",
+                        aospVersion: item.aospVersion
+                    }
+                })
+                oneKeyNewDevicePopup.modelData = deviceList
+                oneKeyNewDevicePopup.open()
             }
         }
 
@@ -1741,10 +1785,36 @@ FluWindow {
             }
         }
 
+        // FluMenuItem{
+        //     text:qsTr("adb命令行")
+        //     visible: deviceContextMenu.currentModel ? deviceContextMenu.currentModel.state === "running" : false
+        //     onClicked: {
+        //         if (!deviceContextMenu.currentModel) return
+        //         var hostIp = deviceContextMenu.currentModel.hostIp || ""
+        //         var adb = deviceContextMenu.currentModel.adb || 0
+        //         if (!hostIp || !adb) {
+        //             showError(qsTr("无法获取设备地址信息"))
+        //             return
+        //         }
+        //         var deviceAddress = hostIp + ":" + adb
+        //         openAdbCommandLine(deviceAddress)
+        //     }
+        // }
+
         FluMenuItem{
             text:qsTr("API接口")
             onClicked: {
                 Qt.openUrlExternally(qsTr("http://%1:18182/docs").arg(deviceContextMenu.currentModel?.hostIp ?? ""))
+            }
+        }
+
+        FluMenuItem{
+            text:qsTr("云机详情")
+            visible: deviceContextMenu.currentModel ? deviceContextMenu.currentModel.state === "running" : false
+            onClicked: {
+                if (!deviceContextMenu.currentModel) return
+                deviceDetailPopup.modelData = deviceContextMenu.currentModel
+                deviceDetailPopup.open()
             }
         }
     }
@@ -1956,6 +2026,12 @@ FluWindow {
                         }
                     }
 
+                    FluText{
+                        text: qsTr("v%1").arg(AppConfig.versionName)
+                        font.pixelSize: 12
+                        Layout.alignment: Qt.AlignVCenter
+                    }
+
                     // 设置下拉菜单
                     FluMenu{
                         id: settingsMenu
@@ -1986,9 +2062,9 @@ FluWindow {
                                 iconTabBar.currentIndex = -1
                             }
                         }
-                        FluMenuItem{
-                            text: qsTr("版本：v%1").arg(AppConfig.versionName)
-                        }
+                        // FluMenuItem{
+                        //     text: qsTr("版本：v%1").arg(AppConfig.versionName)
+                        // }
                     }
 
 
@@ -2208,6 +2284,58 @@ FluWindow {
                                                         sourceComponent: model.itemType === TreeModel.TypeGroup ? groupComponent : (model.itemType === TreeModel.TypeHost ? hostComponent : deviceCheckedComponent)
                                                         property var modelData: model
                                                         property var treeView: groupTreeView
+                                                        property int filteredDeviceCount: {
+                                                            // 如果是主机节点，使用 model.hostPadCount（代理模型已经重写了这个属性来返回过滤后的数量）
+                                                            if (model.itemType === TreeModel.TypeHost) {
+                                                                // 直接使用 model.hostPadCount，因为代理模型已经重写了这个属性来返回过滤后的数量
+                                                                // 这样当设备状态改变时，代理模型会触发 dataChanged，QML 绑定会自动更新
+                                                                return model.hostPadCount ?? 0
+                                                            }
+                                                            // 其他情况返回原始数量
+                                                            return modelData?.hostPadCount ?? 0
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                            // 分割线
+                                            Rectangle {
+                                                Layout.fillWidth: true
+                                                Layout.preferredHeight: 1
+                                                color: "#e0e0e0"
+                                            }
+
+                                            // 状态过滤复选框区域
+                                            Item {
+                                                Layout.preferredHeight: 40
+                                                Layout.fillWidth: true
+
+                                                RowLayout {
+                                                    anchors.left: parent.left
+                                                    anchors.leftMargin: 10
+                                                    anchors.verticalCenter: parent.verticalCenter
+                                                    spacing: 20
+
+                                                    VCheckBox {
+                                                        id: checkBoxRunningOnly
+                                                        text: qsTr("运行中云机")
+                                                        textColor: ThemeUI.blackColor
+                                                        fontSize: 12
+                                                        checked: treeProxyModel.showRunningOnly
+                                                        onClicked: {
+                                                            treeProxyModel.showRunningOnly = checked
+                                                        }
+                                                    }
+
+                                                    VCheckBox {
+                                                        id: checkBoxAllDevices
+                                                        text: qsTr("所有云机")
+                                                        textColor: ThemeUI.blackColor
+                                                        fontSize: 12
+                                                        checked: treeProxyModel.showAllDevices
+                                                        onClicked: {
+                                                            treeProxyModel.showAllDevices = checked
+                                                        }
                                                     }
                                                 }
                                             }
@@ -3559,10 +3687,21 @@ FluWindow {
             }
     }
 
-    // 一键新机
+    // 一键新机（不带 ADI 参数，使用默认值）
     function reqOneKeyNewDevice(ip, padNames){
         Network.postJson(`http://${ip}:18182/container_api/v1` + "/replace_devinfo")
         .addList("db_ids", padNames)
+        .bind(root)
+        .setUserData(ip)
+        .go(oneKeyNewDevice)
+    }
+
+    // 一键新机（带 ADI 参数）
+    function reqOneKeyNewDeviceWithAdi(ip, padNames, adiName, adiPass){
+        Network.postJson(`http://${ip}:18182/container_api/v1` + "/replace_devinfo")
+        .addList("db_ids", padNames)
+        .add("adiName", adiName || "")
+        .add("adiPass", adiPass || "")
         .bind(root)
         .setUserData(ip)
         .go(oneKeyNewDevice)

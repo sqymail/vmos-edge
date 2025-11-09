@@ -1,5 +1,6 @@
 #include "devicemanager.h"
 #include "scrcpy_observer.h"
+#include "grid_observer.h"
 #include "../helper/XapkInstaller.h"
 #include "../../QtScrcpyCore/src/adb/adbprocessimpl.h"
 #include <QCoreApplication>
@@ -10,6 +11,7 @@
 #include <QApplication>
 #include <QProcess>
 #include <QTimer>
+#include <QFileInfo>
 #ifdef Q_OS_WIN
 #include <windows.h>
 #endif
@@ -219,8 +221,61 @@ void DeviceManager::textInput(const QString &serial, const QString &text)
 
 void DeviceManager::pushFile(const QString &serial, const QString &file, const QString &devicePath)
 {
-    auto dev = getDev(m_deviceManage, serial);
-    if (dev) dev->pushFileRequest(file, devicePath);
+    // 调用重载方法，不传递adbDeviceAddress，使用device->pushFileRequest
+    pushFile(serial, file, devicePath, QString());
+}
+
+void DeviceManager::pushFile(const QString &serial, const QString &file, const QString &devicePath, const QString &adbDeviceAddress)
+{
+    qDebug() << "DeviceManager::pushFile - Called with serial:" << serial 
+             << "file:" << file 
+             << "devicePath:" << devicePath
+             << "adbDeviceAddress:" << adbDeviceAddress;
+    
+    // 如果提供了adbDeviceAddress，说明是TCP直连模式，需要直接使用ADB命令
+    if (!adbDeviceAddress.isEmpty()) {
+        qDebug() << "DeviceManager::pushFile - Using TCP direct mode, will connect ADB first";
+        // 检查文件是否存在
+        QFileInfo fileInfo(file);
+        if (!fileInfo.exists()) {
+            qWarning() << "DeviceManager::pushFile - File does not exist:" << file;
+            return;
+        }
+        
+        // 使用绝对路径，避免路径问题
+        QString absoluteFilePath = fileInfo.absoluteFilePath();
+        
+        // Windows上处理中文路径：转换为短路径名（8.3格式）以避免编码问题
+#ifdef Q_OS_WIN
+        // 尝试获取短路径名（8.3格式），如果失败则使用原路径
+        QString shortPath = absoluteFilePath;
+        QByteArray pathBytes = absoluteFilePath.toLocal8Bit();
+        char shortPathBuffer[MAX_PATH];
+        DWORD result = GetShortPathNameA(pathBytes.constData(), shortPathBuffer, MAX_PATH);
+        if (result > 0 && result < MAX_PATH) {
+            shortPath = QString::fromLocal8Bit(shortPathBuffer);
+            qDebug() << "DeviceManager::pushFile - Converted to short path:" << shortPath << "from:" << absoluteFilePath;
+        } else {
+            qWarning() << "DeviceManager::pushFile - Failed to get short path, using original path";
+        }
+        absoluteFilePath = shortPath;
+#endif
+        
+        // 使用重试机制连接ADB
+        connectAdbForPushFileWithRetry(serial, adbDeviceAddress, absoluteFilePath, devicePath, 0);
+    } else {
+        // adbDeviceAddress为空，检查设备对象是否存在
+        qDebug() << "DeviceManager::pushFile - adbDeviceAddress is empty, checking device object for serial:" << serial;
+        auto dev = getDev(m_deviceManage, serial);
+        if (dev) {
+            // 设备对象存在，可能是ADB模式，使用设备对象的pushFileRequest方法
+            qDebug() << "DeviceManager::pushFile - Device object found, calling pushFileRequest";
+            dev->pushFileRequest(file, devicePath.isEmpty() ? "/sdcard/Download" : devicePath);
+        } else {
+            qWarning() << "DeviceManager::pushFile - Cannot push file: device object not found for serial:" << serial
+                       << "and adbDeviceAddress is empty. In TCP direct mode, please provide adbDeviceAddress (ip:port).";
+        }
+    }
 }
 
 void DeviceManager::installApk(const QString &serial, const QString &apkFile)
@@ -529,7 +584,13 @@ bool DeviceManager::registerDeviceObserver(const QString &serial, QObject *obser
     if (dev.isNull()) return false;
     
     // 尝试将 QObject* 转换为 qsc::DeviceObserver*
-    qsc::DeviceObserver* deviceObserver = qobject_cast<ScrcpyObserver*>(observer);
+    // GridObserver 和 ScrcpyObserver 都继承自 QObject 和 qsc::DeviceObserver
+    qsc::DeviceObserver* deviceObserver = qobject_cast<GridObserver*>(observer);
+    if (!deviceObserver) {
+        // 如果不是 GridObserver，尝试 ScrcpyObserver
+        deviceObserver = qobject_cast<ScrcpyObserver*>(observer);
+    }
+    
     if (!deviceObserver) {
         qWarning() << "DeviceManager::registerDeviceObserver - observer is not a valid DeviceObserver";
         return false;
@@ -545,7 +606,11 @@ void DeviceManager::unregisterDeviceObserver(const QString &serial, QObject *obs
     if (dev.isNull()) return;
     
     // 尝试将 QObject* 转换为 qsc::DeviceObserver*
-    qsc::DeviceObserver* deviceObserver = qobject_cast<ScrcpyObserver*>(observer);
+    qsc::DeviceObserver* deviceObserver = qobject_cast<GridObserver*>(observer);
+    if (!deviceObserver) {
+        deviceObserver = qobject_cast<ScrcpyObserver*>(observer);
+    }
+    
     if (!deviceObserver) {
         qWarning() << "DeviceManager::unregisterDeviceObserver - observer is not a valid DeviceObserver";
         return;
@@ -882,5 +947,224 @@ void DeviceManager::connectXapkAdbWithRetry(const QString &serial, const QString
                 connectXapkAdbWithRetry(serial, adbDeviceAddress, xapkFile, dev, retryCount + 1);
             });
         }
+    }
+}
+
+// 文件推送的ADB连接（使用与APK安装相同的逻辑）
+void DeviceManager::connectAdbForPushFileWithRetry(const QString &serial, const QString &adbDeviceAddress, const QString &filePath, const QString &devicePath, int retryCount)
+{
+    qDebug() << "DeviceManager::connectAdbForPushFileWithRetry - serial:" << serial 
+             << "adbDeviceAddress:" << adbDeviceAddress 
+             << "retryCount:" << retryCount;
+    
+    // 设置连接状态
+    m_adbConnectStates[serial] = ACS_CONNECTING;
+    m_adbConnectRetryCount[serial] = retryCount;
+    
+    QString adbPath = AdbProcessImpl::getAdbPath();
+    if (adbPath.isEmpty()) {
+        qWarning() << "DeviceManager::connectAdbForPushFileWithRetry - ADB path is empty";
+        m_adbConnectStates.remove(serial);
+        m_adbConnectRetryCount.remove(serial);
+        return;
+    }
+    
+    // 直接使用QProcess执行adb connect命令
+    QProcess* connectProcess = new QProcess(this);
+    connectProcess->setProgram(adbPath);
+    connectProcess->setArguments(QStringList() << "connect" << adbDeviceAddress);
+    
+    qDebug() << "DeviceManager::connectAdbForPushFileWithRetry - Executing:" << adbPath << "connect" << adbDeviceAddress;
+    
+    connect(connectProcess, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
+            this, [this, connectProcess, serial, adbDeviceAddress, filePath, devicePath, retryCount](int exitCode, QProcess::ExitStatus exitStatus) {
+        
+        QString errorOutput = connectProcess->readAllStandardError();
+        QString stdOutput = connectProcess->readAllStandardOutput();
+        
+        bool shouldContinue = false;
+        
+        if (exitStatus == QProcess::NormalExit && exitCode == 0) {
+            // 退出码为0，连接成功
+            qDebug() << "DeviceManager::connectAdbForPushFileWithRetry - ADB connected successfully (exit code 0) for serial:" << serial
+                     << "output:" << stdOutput;
+            shouldContinue = true;
+        } else if (exitStatus == QProcess::NormalExit) {
+            // 退出码非0，但可能是"already connected"的情况，检查输出
+            QString allOutput = (stdOutput + " " + errorOutput).toLower();
+            
+            // 检查输出中是否包含成功连接的信息
+            if (allOutput.contains("connected") || 
+                allOutput.contains("already connected") ||
+                allOutput.contains("connected to")) {
+                qDebug() << "DeviceManager::connectAdbForPushFileWithRetry - ADB already connected (detected from output) for serial:" << serial
+                         << "output:" << stdOutput << "error:" << errorOutput;
+                shouldContinue = true;
+            } else {
+                qWarning() << "DeviceManager::connectAdbForPushFileWithRetry - ADB connect failed for serial:" << serial 
+                           << "adbDeviceAddress:" << adbDeviceAddress
+                           << "exitCode:" << exitCode
+                           << "error:" << errorOutput
+                           << "output:" << stdOutput;
+            }
+        } else {
+            // 进程崩溃或其他错误
+            qWarning() << "DeviceManager::connectAdbForPushFileWithRetry - ADB connect process crashed or failed for serial:" << serial
+                       << "adbDeviceAddress:" << adbDeviceAddress
+                       << "exitCode:" << exitCode
+                       << "exitStatus:" << exitStatus
+                       << "error:" << errorOutput
+                       << "output:" << stdOutput;
+        }
+        
+        connectProcess->deleteLater();
+        
+        if (shouldContinue) {
+            // 连接成功，验证设备是否真的可用
+            verifyAdbConnectionForPushFile(serial, adbDeviceAddress, filePath, devicePath);
+        } else {
+            // 连接失败，检查是否需要重试
+            if (retryCount < MAX_RETRY_COUNT) {
+                qDebug() << "DeviceManager::connectAdbForPushFileWithRetry - Retrying ADB connection, retryCount:" << (retryCount + 1);
+                // 等待一小段时间后重试
+                QTimer::singleShot(1000, this, [this, serial, adbDeviceAddress, filePath, devicePath, retryCount]() {
+                    connectAdbForPushFileWithRetry(serial, adbDeviceAddress, filePath, devicePath, retryCount + 1);
+                });
+            } else {
+                qWarning() << "DeviceManager::connectAdbForPushFileWithRetry - ADB connection failed after" << MAX_RETRY_COUNT << "retries for serial:" << serial
+                           << "adbDeviceAddress:" << adbDeviceAddress;
+                m_adbConnectStates.remove(serial);
+                m_adbConnectRetryCount.remove(serial);
+            }
+        }
+    });
+    
+    // 启动连接进程
+    connectProcess->start();
+    if (!connectProcess->waitForStarted(3000)) {
+        qWarning() << "DeviceManager::connectAdbForPushFileWithRetry - Failed to start ADB connect process";
+        connectProcess->deleteLater();
+        
+        // 启动失败也重试
+        if (retryCount < MAX_RETRY_COUNT) {
+            QTimer::singleShot(1000, this, [this, serial, adbDeviceAddress, filePath, devicePath, retryCount]() {
+                connectAdbForPushFileWithRetry(serial, adbDeviceAddress, filePath, devicePath, retryCount + 1);
+            });
+        } else {
+            m_adbConnectStates.remove(serial);
+            m_adbConnectRetryCount.remove(serial);
+        }
+    }
+}
+
+// 验证ADB连接是否真的可用（用于文件推送）
+void DeviceManager::verifyAdbConnectionForPushFile(const QString &serial, const QString &adbDeviceAddress, const QString &filePath, const QString &devicePath)
+{
+    qDebug() << "DeviceManager::verifyAdbConnectionForPushFile - Verifying ADB connection for serial:" << serial
+             << "adbDeviceAddress:" << adbDeviceAddress;
+    
+    m_adbConnectStates[serial] = ACS_VERIFYING;
+    
+    QString adbPath = AdbProcessImpl::getAdbPath();
+    if (adbPath.isEmpty()) {
+        qWarning() << "DeviceManager::verifyAdbConnectionForPushFile - ADB path is empty";
+        m_adbConnectStates.remove(serial);
+        m_adbConnectRetryCount.remove(serial);
+        return;
+    }
+    
+    // 使用QProcess执行adb devices命令来验证设备是否真的连接
+    QProcess* verifyProcess = new QProcess(this);
+    verifyProcess->setProgram(adbPath);
+    verifyProcess->setArguments(QStringList() << "devices");
+    
+    connect(verifyProcess, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
+            this, [this, verifyProcess, serial, adbDeviceAddress, filePath, devicePath](int exitCode, QProcess::ExitStatus exitStatus) {
+        
+        if (exitStatus == QProcess::NormalExit && exitCode == 0) {
+            QString output = verifyProcess->readAllStandardOutput();
+            // 检查输出中是否包含设备地址
+            if (output.contains(adbDeviceAddress)) {
+                qDebug() << "DeviceManager::verifyAdbConnectionForPushFile - Device found in adb devices list for serial:" << serial
+                         << "adbDeviceAddress:" << adbDeviceAddress;
+                // 验证成功，开始推送文件
+                startPushFileAfterConnect(serial, adbDeviceAddress, filePath, devicePath);
+                m_adbConnectStates.remove(serial);
+                m_adbConnectRetryCount.remove(serial);
+            } else {
+                qWarning() << "DeviceManager::verifyAdbConnectionForPushFile - Device not found in adb devices list for serial:" << serial
+                           << "adbDeviceAddress:" << adbDeviceAddress;
+                m_adbConnectStates.remove(serial);
+                m_adbConnectRetryCount.remove(serial);
+            }
+        } else {
+            qWarning() << "DeviceManager::verifyAdbConnectionForPushFile - Failed to verify ADB connection for serial:" << serial;
+            m_adbConnectStates.remove(serial);
+            m_adbConnectRetryCount.remove(serial);
+        }
+        
+        verifyProcess->deleteLater();
+    });
+    
+    verifyProcess->start();
+    if (!verifyProcess->waitForStarted(3000)) {
+        qWarning() << "DeviceManager::verifyAdbConnectionForPushFile - Failed to start verify process";
+        verifyProcess->deleteLater();
+        m_adbConnectStates.remove(serial);
+        m_adbConnectRetryCount.remove(serial);
+    }
+}
+
+// 在ADB连接成功后开始推送文件
+void DeviceManager::startPushFileAfterConnect(const QString &serial, const QString &adbDeviceAddress, const QString &absoluteFilePath, const QString &devicePath)
+{
+    qDebug() << "DeviceManager::startPushFileAfterConnect - Starting file push for serial:" << serial
+             << "adbDeviceAddress:" << adbDeviceAddress
+             << "file:" << absoluteFilePath
+             << "devicePath:" << devicePath;
+    
+    QString adbPath = AdbProcessImpl::getAdbPath();
+    if (adbPath.isEmpty()) {
+        qWarning() << "DeviceManager::startPushFileAfterConnect - ADB path is empty, cannot push file";
+        return;
+    }
+    
+    // 构建ADB推送命令
+    QStringList adbArgs;
+    adbArgs << "-s" << adbDeviceAddress;
+    adbArgs << "push" << absoluteFilePath;
+    adbArgs << (devicePath.isEmpty() ? "/sdcard/Download" : devicePath);
+    
+    qDebug() << "DeviceManager::startPushFileAfterConnect - Executing ADB push command:" << adbPath << adbArgs.join(" ");
+    
+    // 使用QProcess执行推送命令
+    QProcess* pushProcess = new QProcess(this);
+    pushProcess->setProgram(adbPath);
+    pushProcess->setArguments(adbArgs);
+    
+    connect(pushProcess, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
+            this, [this, pushProcess, serial, adbDeviceAddress, absoluteFilePath](int exitCode, QProcess::ExitStatus exitStatus) {
+        if (exitStatus == QProcess::NormalExit && exitCode == 0) {
+            qDebug() << "DeviceManager::startPushFileAfterConnect - File pushed successfully for serial:" << serial
+                     << "file:" << absoluteFilePath;
+        } else {
+            QString errorOutput = pushProcess->readAllStandardError();
+            QString stdOutput = pushProcess->readAllStandardOutput();
+            qWarning() << "DeviceManager::startPushFileAfterConnect - File push failed for serial:" << serial
+                       << "adbDeviceAddress:" << adbDeviceAddress
+                       << "file:" << absoluteFilePath
+                       << "exitCode:" << exitCode
+                       << "exitStatus:" << exitStatus
+                       << "error:" << errorOutput
+                       << "output:" << stdOutput;
+        }
+        pushProcess->deleteLater();
+    });
+    
+    // 启动推送进程
+    pushProcess->start();
+    if (!pushProcess->waitForStarted(5000)) {
+        qWarning() << "DeviceManager::startPushFileAfterConnect - Failed to start ADB push process for serial:" << serial;
+        pushProcess->deleteLater();
     }
 }

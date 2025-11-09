@@ -3,6 +3,10 @@
 /bin/
 /dist/
 .vs/
+/adi/
+/cbs/
+/out/
+/NSIS_SetupSkin/
 __pycache__/
 vcpkg_installed/
 # Ignore CMake user-specific files

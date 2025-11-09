@@ -1057,5 +1057,7 @@
         <file>res/pad/logo-head@1.25x.png</file>
         <file>res/pad/logo-head@1.75x.png</file>
         <file>res/pad/logo-head@2x.png</file>
+        <file>qml/OneKeyNewDevicePopup.qml</file>
+        <file>qml/DeviceDetailPopup.qml</file>
     </qresource>
 </RCC>

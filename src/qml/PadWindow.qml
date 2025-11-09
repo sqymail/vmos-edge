@@ -503,7 +503,18 @@ FluWindow {
                             } else {
                                 // 导入按钮：所有文件（包括APK）都上传到云机，不执行安装
                                 if(root.deviceSerial){
-                                    deviceManager.pushFile(root.deviceSerial, localPath, "/sdcard/Download")
+                                    // 根据连接模式确定ADB设备地址
+                                    let adbDeviceAddress = ""
+                                    if (AppConfig.useDirectTcp) {
+                                        // TCP直连模式：使用 hostIp:adb 作为ADB设备地址
+                                        const hostIp = root.argument.hostIp || ""
+                                        const adb = root.argument.adb || 0
+                                        if (hostIp && adb > 0) {
+                                            adbDeviceAddress = `${hostIp}:${adb}`
+                                        }
+                                    }
+                                    // 如果adbDeviceAddress为空，则使用deviceSerial（ADB模式）
+                                    deviceManager.pushFile(root.deviceSerial, localPath, "/sdcard/Download", adbDeviceAddress)
                                 }
                             }
                         })
@@ -784,26 +795,6 @@ FluWindow {
             }
         }
     }
-    
-    // 窗口级别的键盘事件监听：当检测到键盘输入但 inputField 没有焦点时，恢复焦点
-    // 这样当用户点击云机输入框后直接输入时，可以自动恢复焦点
-    // 注意：窗口需要有焦点才能接收键盘事件，但我们会优先让 inputField 获得焦点
-    Keys.onPressed: (event) => {
-        console.log("窗口收到键盘事件:", event.key, "inputField.focus:", inputField.focus, "窗口焦点:", root.activeFocus)
-        // 如果是可打印字符，说明用户想要输入
-        if (event.key >= Qt.Key_Space && event.key <= Qt.Key_ydiaeresis) {
-            if (!inputField.focus) {
-                console.log("检测到键盘输入但 inputField 没有焦点，立即恢复焦点并重新处理输入")
-                // 先恢复 inputField 焦点
-                inputField.forceActiveFocus()
-                // 然后手动触发文本输入（因为当前事件可能已经错过了）
-                // 注意：这里不能直接设置 text，因为会触发 onTextChanged
-                // 但我们可以确保后续输入能被捕获
-            }
-        }
-        // 不阻止事件传播，让其他组件（如 inputField）也能接收到
-        event.accepted = false
-    }
 
     function findJoystickModel() {
         for (var i = 0; i < keymapperModel.rowCount(); ++i) {
@@ -962,7 +953,18 @@ FluWindow {
                                                      }
                                                  } else {
                                                      if(root.deviceSerial){
-                                                         deviceManager.pushFile(root.deviceSerial, localPath, "/sdcard/Download")
+                                                         // 根据连接模式确定ADB设备地址
+                                                         let adbDeviceAddress = ""
+                                                         if (AppConfig.useDirectTcp) {
+                                                             // TCP直连模式：使用 hostIp:adb 作为ADB设备地址
+                                                             const hostIp = root.argument.hostIp || ""
+                                                             const adb = root.argument.adb || 0
+                                                             if (hostIp && adb > 0) {
+                                                                 adbDeviceAddress = `${hostIp}:${adb}`
+                                                             }
+                                                         }
+                                                         // 如果adbDeviceAddress为空，则使用deviceSerial（ADB模式）
+                                                         deviceManager.pushFile(root.deviceSerial, localPath, "/sdcard/Download", adbDeviceAddress)
                                                      }
                                                  }
                                              })
@@ -973,6 +975,27 @@ FluWindow {
     Item{
         id: rootContainer
         anchors.fill: parent
+        focus: true
+
+        // 窗口级别的键盘事件监听：当检测到键盘输入但 inputField 没有焦点时，恢复焦点
+        // 这样当用户点击云机输入框后直接输入时，可以自动恢复焦点
+        // 注意：窗口需要有焦点才能接收键盘事件，但我们会优先让 inputField 获得焦点
+        Keys.onPressed: (event) => {
+            console.log("窗口收到键盘事件:", event.key, "inputField.focus:", inputField.focus, "窗口焦点:", root.activeFocus)
+            // 如果是可打印字符，说明用户想要输入
+            if (event.key >= Qt.Key_Space && event.key <= Qt.Key_ydiaeresis) {
+                if (!inputField.focus) {
+                    console.log("检测到键盘输入但 inputField 没有焦点，立即恢复焦点并重新处理输入")
+                    // 先恢复 inputField 焦点
+                    inputField.forceActiveFocus()
+                    // 然后手动触发文本输入（因为当前事件可能已经错过了）
+                    // 注意：这里不能直接设置 text，因为会触发 onTextChanged
+                    // 但我们可以确保后续输入能被捕获
+                }
+            }
+            // 不阻止事件传播，让其他组件（如 inputField）也能接收到
+            event.accepted = false
+        }
 
         TextInput {
             id: inputField

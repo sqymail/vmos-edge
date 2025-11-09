@@ -194,6 +194,8 @@ Item {
                             (index)=> {
                                 var versions = ["", "10", "13", "14", "15"]
                                 root.filterVersion = versions[index] !== undefined ? versions[index] : ""
+                                // 切换版本时重置滚动位置到顶部
+                                listView.positionViewAtBeginning()
                             }
                     }
 
@@ -288,7 +290,13 @@ Item {
                     ScrollBar.vertical: ScrollBar { }
 
                     delegate: Rectangle {
-                        property bool itemVisible: root.filterVersion === "" || ("" + (asopVersion || "")) === root.filterVersion
+                        property bool itemVisible: {
+                            if (root.filterVersion === "") {
+                                return true
+                            }
+                            var version = String(asopVersion || "")
+                            return version === root.filterVersion
+                        }
                         width: listView.width
                         height: itemVisible ? 50 : 0
                         color: "transparent"

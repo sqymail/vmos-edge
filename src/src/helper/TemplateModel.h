@@ -17,6 +17,8 @@ struct TemplateItem {
     QString filePath;
     QString asopVersion;
     QString updateTime;
+    QString id;
+    QString pwd;
 };
 
 class TemplateModel : public QAbstractListModel
@@ -30,7 +32,9 @@ public:
         NameRole,
         FilePathRole,
         AsopVersionRole,
-        UpdateTimeRole
+        UpdateTimeRole,
+        IdRole,
+        PwdRole
     };
     Q_ENUM(TemplateRoles)
     explicit TemplateModel(QObject* parent = nullptr);

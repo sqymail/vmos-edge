@@ -44,7 +44,8 @@ enum DeviceRoles {
     UpdateTimeRole,
     TcpVideoPortRole,
     TcpAudioPortRole,
-    TcpControlPortRole
+    TcpControlPortRole,
+    MacvlanIpRole
 };
 
 // 设备数据结构体
@@ -76,6 +77,7 @@ struct DeviceData {
     int tcpVideoPort;                 // TCP视频流端口
     int tcpAudioPort;                 // TCP音频流端口
     int tcpControlPort;               // TCP控制流端口
+    QString macvlanIp;               // Macvlan IP地址
 };
 
 inline bool operator==(const DeviceData& a, const DeviceData& b) {
@@ -104,7 +106,8 @@ inline bool operator==(const DeviceData& a, const DeviceData& b) {
            a.selected == b.selected &&
            a.tcpVideoPort == b.tcpVideoPort &&
            a.tcpAudioPort == b.tcpAudioPort &&
-           a.tcpControlPort == b.tcpControlPort;
+           a.tcpControlPort == b.tcpControlPort &&
+           a.macvlanIp == b.macvlanIp;
 }
 
 Q_DECLARE_METATYPE(DeviceData)

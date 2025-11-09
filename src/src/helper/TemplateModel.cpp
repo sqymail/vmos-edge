@@ -62,6 +62,10 @@ QVariant TemplateModel::data(const QModelIndex& index, int role) const
         return item.asopVersion;
     case UpdateTimeRole:
         return item.updateTime;
+    case IdRole:
+        return item.id;
+    case PwdRole:
+        return item.pwd;
     default:
         return QVariant();
     }
@@ -96,6 +100,12 @@ bool TemplateModel::setData(const QModelIndex& index, const QVariant& value, int
     case UpdateTimeRole:
         item.updateTime = value.toString();
         break;
+    case IdRole:
+        item.id = value.toString();
+        break;
+    case PwdRole:
+        item.pwd = value.toString();
+        break;
     default:
         return false;
     }
@@ -114,6 +124,8 @@ QHash<int, QByteArray> TemplateModel::roleNames() const
     roles[FilePathRole] = "filePath";
     roles[AsopVersionRole] = "asopVersion";
     roles[UpdateTimeRole] = "updateTime";
+    roles[IdRole] = "id";
+    roles[PwdRole] = "pwd";
     return roles;
 }
 
@@ -214,6 +226,8 @@ void TemplateModel::saveConfig()
         jsonObj["filePath"] = item.filePath;
         jsonObj["asopVersion"] = item.asopVersion;
         jsonObj["updateTime"] = item.updateTime;
+        jsonObj["id"] = item.id;
+        jsonObj["pwd"] = item.pwd;
 
         jsonArray.append(jsonObj);
     }
@@ -290,6 +304,8 @@ void TemplateModel::loadConfig()
         // asopVersion 历史别名：aospVersion/androidVersion/version
         item.asopVersion = readWithAliases(jsonObj, {"asopVersion", "aospVersion", "androidVersion", "version"});
         item.updateTime = readWithAliases(jsonObj, {"updateTime", "createTime", "importTime", "updatedAt", "createdAt"});
+        item.id = readWithAliases(jsonObj, {"id", "templateId", "deviceId"});
+        item.pwd = readWithAliases(jsonObj, {"pwd", "password", "pass", "devicePassword"});
 
         // 推断缺省值
         if (item.name.isEmpty() && !item.filePath.isEmpty()) {

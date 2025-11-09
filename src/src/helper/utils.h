@@ -17,4 +17,5 @@ public:
     Q_INVOKABLE int64_t milliseconds();
     Q_INVOKABLE bool createDirectory(const QString& path);
     Q_INVOKABLE QString getClipboradText();
+    Q_INVOKABLE void executeCommandInTerminal(const QString& command);
 };

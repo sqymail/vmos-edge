@@ -28,6 +28,7 @@ FluPopup {
     ListModel {
         id: localImagesModel
     }
+
     Timer {
         id: adiPollTimer
         interval: 400
@@ -104,7 +105,8 @@ FluPopup {
                                         root.createDeviceParams.dns,
                                         root.createDeviceParams.num,
                                         root.createDeviceParams.adiName || "",
-                                        root.createDeviceParams.adiPass || ""
+                                        root.createDeviceParams.adiPass || "",
+                                        root.createDeviceParams.boolMacvlan || false
                                     );
                                     root.createDeviceParams = null;
                                 }
@@ -138,7 +140,8 @@ FluPopup {
                                         root.createDeviceParams.dns,
                                         root.createDeviceParams.num,
                                         root.createDeviceParams.adiName || "",
-                                        root.createDeviceParams.adiPass || ""
+                                        root.createDeviceParams.adiPass || "",
+                                        root.createDeviceParams.boolMacvlan || false
                                     );
                                     root.createDeviceParams = null;
                                 }
@@ -196,10 +199,10 @@ FluPopup {
             var index = tempLateModel.index(i, 0);
             var templateBrand = tempLateModel.data(index, TemplateModel.BrandRole).toString();
             var templateModel = tempLateModel.data(index, TemplateModel.ModelRole).toString();
-            var adiPath = tempLateModel.data(index, TemplateModel.FilePathRole).toString();
+            var name = tempLateModel.data(index, TemplateModel.NameRole).toString();
             
             if (templateBrand === brand && templateModel === model) {
-                return adiPath;
+                return name;
             }
         }
         return "";
@@ -226,6 +229,19 @@ FluPopup {
             var layout = tempLateModel.data(index, TemplateModel.LayoutRole).toString();
             if (templateBrand === brand && templateModel === model) {
                 return layout;
+            }
+        }
+        return "";
+    }
+
+    function getPwdFromTemplate(brand, model) {
+        for (var i = 0; i < tempLateModel.rowCount(); i++) {
+            var index = tempLateModel.index(i, 0);
+            var templateBrand = tempLateModel.data(index, TemplateModel.BrandRole).toString();
+            var templateModel = tempLateModel.data(index, TemplateModel.ModelRole).toString();
+            var pwd = tempLateModel.data(index, TemplateModel.PwdRole).toString();
+            if (templateBrand === brand && templateModel === model) {
+                return pwd;
             }
         }
         return "";
@@ -300,6 +316,12 @@ FluPopup {
                 brandComboBox.model = newBrandModel;
                 console.log("Updated brand model from template:", newBrandModel);
                 console.log("Updated model data from template:", newModelData);
+                
+                // 如果当前没有选择品牌，自动选择第一个品牌和第一个机型
+                if (brandComboBox.currentIndex < 0) {
+                    brandComboBox.currentIndex = 0
+                    // currentIndex 改变会触发 onCurrentTextChanged，自动选择第一个机型
+                }
             }
         } catch (e) {
             console.error("Error updating brand model from template:", e);
@@ -336,6 +358,12 @@ FluPopup {
                 brandComboBox.model = newBrandModel;
                 console.log("Updated brand model from ADI:", newBrandModel);
                 console.log("Updated model data from ADI:", newModelData);
+                
+                // 如果当前没有选择品牌，自动选择第一个品牌和第一个机型
+                if (brandComboBox.currentIndex < 0) {
+                    brandComboBox.currentIndex = 0
+                    // currentIndex 改变会触发 onCurrentTextChanged，自动选择第一个机型
+                }
             }
         } catch (e) {
             console.error("Error updating brand model from ADI:", e);
@@ -346,6 +374,78 @@ FluPopup {
         var s = (v === undefined || v === null) ? "" : ("" + v)
         var m = s.match(/(\d{1,2})/)
         return m && m[1] ? m[1] : ""
+    }
+
+    // 根据 Android 版本更新品牌和机型列表（只显示匹配该版本的品牌和机型）
+    function updateBrandModelByAndroidVersion(androidVersion) {
+        try {
+            if (!androidVersion) {
+                // 如果没有 Android 版本，显示所有品牌
+                updateBrandModelFromTemplate()
+                return
+            }
+            
+            var normalizedVersion = normalizeAndroidVersion(androidVersion)
+            var newBrandModel = [];
+            var newModelData = {};
+            
+            // 从 templateModel 获取匹配该 Android 版本的品牌和机型数据
+            for (var i = 0; i < tempLateModel.rowCount(); i++) {
+                var index = tempLateModel.index(i, 0);
+                var brand = tempLateModel.data(index, TemplateModel.BrandRole).toString();
+                var model = tempLateModel.data(index, TemplateModel.ModelRole).toString();
+                var templateVersion = tempLateModel.data(index, TemplateModel.AsopVersionRole).toString();
+                var normalizedTemplateVersion = normalizeAndroidVersion(templateVersion);
+                
+                // 只添加匹配 Android 版本的品牌和机型
+                if (brand && model && normalizedTemplateVersion === normalizedVersion) {
+                    // 如果品牌不存在，添加到品牌列表
+                    if (newBrandModel.indexOf(brand) === -1) {
+                        newBrandModel.push(brand);
+                        newModelData[brand] = [];
+                    }
+                    // 添加机型到对应品牌
+                    if (newModelData[brand].indexOf(model) === -1) {
+                        newModelData[brand].push(model);
+                    }
+                }
+            }
+            
+            // 更新品牌和机型数据
+            if (newBrandModel.length > 0) {
+                root.brandModel = newBrandModel;
+                root.brandModelData = newModelData;
+                
+                // 更新品牌下拉框
+                brandComboBox.model = newBrandModel;
+                console.log("Updated brand model by Android version:", androidVersion, "brands:", newBrandModel);
+                
+                // 如果当前选择的品牌不在新列表中，重置选择
+                var currentBrand = brandComboBox.currentText;
+                if (currentBrand && newBrandModel.indexOf(currentBrand) === -1) {
+                    brandComboBox.currentIndex = -1;
+                    modelComboBox.model = [];
+                    modelComboBox.currentIndex = -1;
+                }
+                
+                // 如果当前没有选择品牌，自动选择第一个品牌和第一个机型
+                if (brandComboBox.currentIndex < 0) {
+                    brandComboBox.currentIndex = 0
+                    // currentIndex 改变会触发 onCurrentTextChanged，自动选择第一个机型
+                }
+            } else {
+                // 如果没有匹配的品牌，清空列表
+                root.brandModel = [];
+                root.brandModelData = {};
+                brandComboBox.model = [];
+                brandComboBox.currentIndex = -1;
+                modelComboBox.model = [];
+                modelComboBox.currentIndex = -1;
+                console.log("No brands found for Android version:", androidVersion);
+            }
+        } catch (e) {
+            console.error("Error updating brand model by Android version:", e);
+        }
     }
 
     // 根据本地镜像条目（name/fileName）查找 Android 版本
@@ -380,7 +480,8 @@ FluPopup {
                     layout: tempLateModel.data(idx, TemplateModel.LayoutRole).toString(),
                     name: tempLateModel.data(idx, TemplateModel.NameRole).toString(),
                     filePath: tempLateModel.data(idx, TemplateModel.FilePathRole).toString(),
-                    version: v
+                    version: v,
+                    pwd: tempLateModel.data(idx, TemplateModel.PwdRole).toString()
                 }
             }
         }
@@ -474,14 +575,19 @@ FluPopup {
         }
         root.phoneCount = Math.min(1, root.remainingPhones)
         phoneCountSpinBox.value = root.phoneCount
-        
+        macvlanToggle.checked = false
         // 获取当前主机运行中的云机数量
         if (root.modelData && root.modelData.ip && typeof treeModel !== 'undefined') {
             root.runningDeviceCount = treeModel.getRunningDeviceCount(root.modelData.ip)
         }
         
-        // 从 templateModel 初始化品牌机型数据
-        updateBrandModelFromTemplate()
+        // 清空品牌和机型列表，等待镜像选择后再根据 Android 版本过滤
+        root.brandModel = []
+        root.brandModelData = {}
+        brandComboBox.model = []
+        brandComboBox.currentIndex = -1
+        modelComboBox.model = []
+        modelComboBox.currentIndex = -1
         
         // 拉取主机硬件配置（用于存储空间检查）
         reqHardwareCfg(modelData.ip)
@@ -556,16 +662,55 @@ FluPopup {
                 Layout.fillWidth: true
                 model: localImagesModel
                 textRole: "displayText"
+                delegate: FluItemDelegate {
+                    id: itemDelegate
+                    width: imageComboBox.width
+                    text: imageComboBox.textRole ? (Array.isArray(imageComboBox.model) ? modelData[imageComboBox.textRole] : model[imageComboBox.textRole]) : modelData
+                    palette.text: imageComboBox.palette.text
+                    font: imageComboBox.font
+                    palette.highlightedText: imageComboBox.palette.highlightedText
+                    highlighted: imageComboBox.highlightedIndex === index
+                    hoverEnabled: imageComboBox.hoverEnabled
+                    contentItem: FluText {
+                        text: itemDelegate.text
+                        font: itemDelegate.font
+                        color: {
+                            var isDownloaded = false
+                            if (imageComboBox.model) {
+                                var idx = index
+                                if (idx >= 0 && idx < localImagesModel.count) {
+                                    var item = localImagesModel.get(idx)
+                                    isDownloaded = item.isDownloaded || false
+                                }
+                            }
+                            if (isDownloaded) {
+                                return "#00AA00"  // 绿色
+                            }
+                            // 使用默认颜色逻辑
+                            if (itemDelegate.down) {
+                                return FluTheme.dark ? FluColors.Grey80 : FluColors.Grey120
+                            }
+                            return FluTheme.dark ? FluColors.White : FluColors.Grey220
+                        }
+                    }
+                }
                 onCurrentIndexChanged: {
                     if (currentIndex >= 0 && currentIndex < localImagesModel.count) {
                         var it = localImagesModel.get(currentIndex)
                         var fileName = it.fileName
                         var imageName = it.name
                         var v = getAndroidVersionForImage(imageName, fileName)
+                        
+                        // 根据 Android 版本更新品牌和机型列表（只显示匹配该版本的品牌）
+                        updateBrandModelByAndroidVersion(v)
+                        
                         var tpl = findDefaultTemplateByVersion(v)
                         if (tpl && tpl.layout) {
                             applyLayoutToResolution(tpl.layout)
                         }
+                    } else {
+                        // 如果没有选择镜像，显示所有品牌
+                        updateBrandModelFromTemplate()
                     }
                 }
             }
@@ -593,93 +738,102 @@ FluPopup {
                 }
             }
 
+            // RowLayout{
+            //     Layout.topMargin: 5
+                
+            //     RowLayout {
+            //         spacing: 5
+                    
+            //         FluText {
+            //             text: qsTr("品牌型号");
+            //             font.bold: true
+            //         }
+                    
+            //         Image {
+            //             id: brandHelpIcon
+            //             source: "qrc:/res/pad/help.svg"
+            //             width: 12
+            //             height: 12
+
+            //             FluTooltip {
+            //                 parent: brandHelpIcon
+            //                 visible: mouseArea.containsMouse
+            //                 text: qsTr("默认机型请在 \"设置\" - \"机型设置\" 中进行操作")
+            //                 delay: 500
+            //                 timeout: 3000
+            //             }
+
+            //             MouseArea {
+            //                 id: mouseArea
+            //                 anchors.fill: parent
+            //                 hoverEnabled: true
+            //             }
+            //         }
+            //     }
+                
+            //     Item{
+            //         Layout.preferredWidth: 20
+            //     }
+
+            //     RowLayout {
+            //         spacing: 20
+
+            //         ButtonGroup{
+            //             id: radioGroup
+            //             exclusive: true
+            //         }
+
+            //         VCheckBox{
+            //             id: defaultModelRadio
+            //             text: qsTr("默认机型")
+            //             // enabled: false
+            //             // checked: true
+            //             textColor: ThemeUI.blackColor
+            //             selectedImage: ThemeUI.loadRes("common/option_selected.png")
+            //             unselectedImag: ThemeUI.loadRes("common/option_unselected.png")
+            //             onClicked: {
+            //                 // if (checked) {
+            //                 //     customModelRadio.checked = false
+            //                 //     resetBrandModelSelection()
+            //                 // }
+            //             }
+
+            //             ButtonGroup.group: radioGroup
+            //         }
+
+            //         VCheckBox{
+            //             id: customModelRadio
+            //             text: qsTr("指定机型")
+            //             // enabled: false
+            //             textColor: ThemeUI.blackColor
+            //             selectedImage: ThemeUI.loadRes("common/option_selected.png")
+            //             unselectedImag: ThemeUI.loadRes("common/option_unselected.png")
+            //             onClicked: {
+            //                 // if (checked) {
+            //                 //     customModelRadio.checked = false
+            //                 //     resetBrandModelSelection()
+            //                 // }
+            //             }
+
+            //             ButtonGroup.group: radioGroup
+            //         }
+            //     }
+                
+            //     Item { Layout.fillWidth: true }
+            // }
+
             RowLayout{
-                Layout.topMargin: 5
-                visible: false
-                
-                RowLayout {
-                    spacing: 5
-                    
-                    FluText { 
-                        text: qsTr("品牌型号"); 
-                        font.bold: true 
-                    }
-                    
-                    Image {
-                        id: brandHelpIcon
-                        source: "qrc:/res/pad/help.svg"
-                        width: 12
-                        height: 12
-
-                        FluTooltip {
-                            parent: brandHelpIcon
-                            visible: mouseArea.containsMouse
-                            text: qsTr("默认机型请在 \"设置\" - \"机型设置\" 中进行操作")
-                            delay: 500
-                            timeout: 3000
-                        }
-
-                        MouseArea {
-                            id: mouseArea
-                            anchors.fill: parent
-                            hoverEnabled: true
-                        }
-                    }
+                FluText {
+                    text: qsTr("指定机型");
+                    font.bold: true
                 }
-                
+
                 Item{
-                    Layout.preferredWidth: 20
+                    Layout.fillWidth: true
                 }
-
-                RowLayout {
-                    spacing: 20
-
-                    ButtonGroup{
-                        id: radioGroup
-                        exclusive: true
-                    }
-
-                    VCheckBox{
-                        id: defaultModelRadio
-                        text: qsTr("默认机型")
-                        enabled: false
-                        checked: true
-                        textColor: ThemeUI.blackColor
-                        selectedImage: ThemeUI.loadRes("common/option_selected.png")
-                        unselectedImag: ThemeUI.loadRes("common/option_unselected.png")
-                        onClicked: {
-                            // if (checked) {
-                            //     customModelRadio.checked = false
-                            //     resetBrandModelSelection()
-                            // }
-                        }
-
-                        ButtonGroup.group: radioGroup
-                    }
-
-                    VCheckBox{
-                        id: customModelRadio
-                        text: qsTr("指定机型")
-                        enabled: false
-                        textColor: ThemeUI.blackColor
-                        selectedImage: ThemeUI.loadRes("common/option_selected.png")
-                        unselectedImag: ThemeUI.loadRes("common/option_unselected.png")
-                        onClicked: {
-                            // if (checked) {
-                            //     customModelRadio.checked = false
-                            //     resetBrandModelSelection()
-                            // }
-                        }
-
-                        ButtonGroup.group: radioGroup
-                    }
-                }
-                
-                Item { Layout.fillWidth: true }
             }
 
             RowLayout{
-                visible: customModelRadio.checked
                 Layout.topMargin: 8
                 
                 FluText { 
@@ -690,14 +844,18 @@ FluPopup {
                 FluComboBox {
                     id: brandComboBox
                     Layout.fillWidth: true
-                    enabled: customModelRadio.checked
                     model: root.brandModel
                     onCurrentTextChanged: {
                         // 当品牌改变时，更新机型列表（兼容 brandModelData 未初始化的场景）
                         const map = root.brandModelData || {};
-                        if (customModelRadio.checked && currentText && map[currentText]) {
+                        if (currentText && map[currentText]) {
                             modelComboBox.model = map[currentText]
-                            modelComboBox.currentIndex = -1
+                            // 默认选择第一个机型
+                            if (modelComboBox.model.length > 0) {
+                                modelComboBox.currentIndex = 0
+                            } else {
+                                modelComboBox.currentIndex = -1
+                            }
                         } else {
                             modelComboBox.model = []
                             modelComboBox.currentIndex = -1
@@ -717,10 +875,9 @@ FluPopup {
                 FluComboBox {
                     id: modelComboBox
                     Layout.fillWidth: true
-                    enabled: customModelRadio.checked
                     model: []
                     onCurrentTextChanged: {
-                        if (customModelRadio.checked && brandComboBox.currentText && currentText) {
+                        if (brandComboBox.currentText && currentText) {
                             var lay = getLayoutFromTemplate(brandComboBox.currentText, currentText)
                             if (lay) {
                                 applyLayoutToResolution(lay)
@@ -751,7 +908,7 @@ FluPopup {
                         FluTooltip {
                             parent: macvlanIcon
                             visible: macvlanMouseArea.containsMouse
-                            text: qsTr("默认机型请在 \"设置\" - \"机型设置\" 中进行操作")
+                            text: qsTr("拥有局域网内的独立IP")
                             delay: 500
                             timeout: 3000
                         }
@@ -765,6 +922,7 @@ FluPopup {
 
                     FluToggleSwitch{
                         id: macvlanToggle
+                        checkColor: ThemeUI.primaryColor
                     }
                 }
             }
@@ -972,6 +1130,7 @@ FluPopup {
                     var defaultTpl = findDefaultTemplateByVersion(androidVersion)
                     var adiName = defaultTpl ? defaultTpl.name : ""
                     var defaultAdiPath = defaultTpl ? defaultTpl.filePath : ""
+                    var adiPass = ""  // 初始化密码
                     console.log("[创建云机] 解析版本:", androidVersion, "默认模板:", JSON.stringify(defaultTpl), "初始adiName:", adiName)
                     
                     // 使用镜像版本与主机已存在的镜像列表比较
@@ -998,11 +1157,12 @@ FluPopup {
                     // 检查是否需要上传 ADI（优先默认模板；若选择"指定机型"则使用选择项）
                     var needUploadAdi = false;
                     var adiPath = "";
-                    if (customModelRadio.checked && brandComboBox.currentText && modelComboBox.currentText) {
+                    if (brandComboBox.currentText && modelComboBox.currentText) {
                         var selectedBrand = brandComboBox.currentText;
                         var selectedModel = modelComboBox.currentText;
-                        // 从模板获取真实的 ADI 文件名
+                        // 从模板获取真实的 ADI 文件名和密码
                         adiName = getAdiNameFromTemplate(selectedBrand, selectedModel)
+                        adiPass = getPwdFromTemplate(selectedBrand, selectedModel)
                         var layoutStr = getLayoutFromTemplate(selectedBrand, selectedModel)
                         // 只有当用户没有手动修改过分辨率时，才使用模板中的分辨率
                         if (!root.isResolutionManuallyChanged) {
@@ -1014,7 +1174,7 @@ FluPopup {
                         } else {
                             console.log("[创建云机] 用户已手动修改分辨率，使用用户选择:", JSON.stringify(resolution))
                         }
-                        console.log("[创建云机] 指定机型:", selectedBrand, selectedModel, "layout=", layoutStr, "最终分辨率=", JSON.stringify(resolution), "adiName=", adiName)
+                        console.log("[创建云机] 指定机型:", selectedBrand, selectedModel, "layout=", layoutStr, "最终分辨率=", JSON.stringify(resolution), "adiName=", adiName, "adiPass=", adiPass ? "***" : "")
                         if (!isAdiExists(selectedBrand, selectedModel)) {
                             needUploadAdi = true;
                             adiPath = getAdiPathFromTemplate(selectedBrand, selectedModel);
@@ -1033,6 +1193,8 @@ FluPopup {
                         }
                         // 如果模板中也未找到名称，则保持空字符串
                     } else if (defaultTpl) {
+                        // 从默认模板获取密码（优先使用 defaultTpl.pwd，如果没有则从模板中查找）
+                        adiPass = defaultTpl.pwd || getPwdFromTemplate(defaultTpl.brand, defaultTpl.model)
                         // 只有当用户没有手动修改过分辨率时，才使用默认模板中的布局
                         if (!root.isResolutionManuallyChanged) {
                             var tplResolution = parseLayoutToResolution(defaultTpl.layout)
@@ -1043,7 +1205,7 @@ FluPopup {
                         } else {
                             console.log("[创建云机] 用户已手动修改分辨率，使用用户选择:", JSON.stringify(resolution))
                         }
-                        console.log("[创建云机] 使用默认模板: layout=", defaultTpl.layout, "最终分辨率=", JSON.stringify(resolution), "adiName=", adiName)
+                        console.log("[创建云机] 使用默认模板: layout=", defaultTpl.layout, "最终分辨率=", JSON.stringify(resolution), "adiName=", adiName, "adiPass=", adiPass ? "***" : "")
                         if (!isAdiExists(defaultTpl.brand, defaultTpl.model)) {
                             needUploadAdi = true;
                             // 模型中保存的是文件名，这里拼接可执行目录/adi/文件名
@@ -1074,7 +1236,8 @@ FluPopup {
                                 "dns": dnsList,
                                 "num": num,
                                 "adiName": adiName,
-                                "adiPass": ""
+                                "adiPass": adiPass || "",
+                                "boolMacvlan": macvlanToggle.checked
                             }
                             // 保存待创建参数，供 ADI 列表可见后触发创建
                             root.pendingCreate = Object.assign({}, root.createDeviceParams)
@@ -1083,7 +1246,7 @@ FluPopup {
                             reqImportAdi(root.modelData.ip, adiPath);
                         } else {
                             console.log("[创建云机] 直接创建云机(主机镜像)")
-                            reqCreateDevice(root.modelData.ip, name, imageName, resolution, true, dnsList, num, adiName, "");
+                            reqCreateDevice(root.modelData.ip, name, imageName, resolution, true, dnsList, num, adiName, adiPass || "", macvlanToggle.checked);
                         }
                         return;
                     }
@@ -1117,7 +1280,8 @@ FluPopup {
                                 "dns": dnsList,
                                 "num": num,
                                 "adiName": adiName,
-                                "adiPass": ""
+                                "adiPass": adiPass || "",
+                                "boolMacvlan": macvlanToggle.checked
                             }
                             // 保存待创建参数，供 ADI 列表可见后触发创建
                             root.pendingCreate = Object.assign({}, root.createDeviceParams)
@@ -1126,7 +1290,7 @@ FluPopup {
                             reqImportAdi(root.modelData.ip, adiPath);
                         } else {
                             console.log("[创建云机] 直接创建云机(主机已有镜像)")
-                            reqCreateDevice(root.modelData.ip, name, imageName, resolution, true, dnsList, num, adiName, "");
+                            reqCreateDevice(root.modelData.ip, name, imageName, resolution, true, dnsList, num, adiName, adiPass || "", macvlanToggle.checked);
                         }
                     } else {
                         console.log("[创建云机] 主机不存在该镜像，将上传:", path, "needUploadAdi=", needUploadAdi)
@@ -1142,7 +1306,8 @@ FluPopup {
                             "needUploadAdi": needUploadAdi,
                             "adiPath": adiPath,
                             "adiName": adiName,
-                            "adiPass": ""
+                            "adiPass": adiPass || "",
+                            "boolMacvlan": macvlanToggle.checked
                         }
                         reqUploadImage(root.modelData.ip, path);
                     }
@@ -1152,6 +1317,63 @@ FluPopup {
     }
 
 
+
+    // 从镜像名中提取时间戳（支持多种格式）
+    function extractTimeFromFileName(fileName) {
+        if (!fileName) return 0
+        
+        // 格式1: yyyyMMddHHmmss (14位数字)
+        var match1 = fileName.match(/(\d{14})/)
+        if (match1) {
+            var timeStr = match1[1]
+            var year = parseInt(timeStr.substring(0, 4))
+            var month = parseInt(timeStr.substring(4, 6))
+            var day = parseInt(timeStr.substring(6, 8))
+            var hour = parseInt(timeStr.substring(8, 10))
+            var minute = parseInt(timeStr.substring(10, 12))
+            var second = parseInt(timeStr.substring(12, 14))
+            return new Date(year, month - 1, day, hour, minute, second).getTime()
+        }
+        
+        // 格式2: yyyyMMddHHmmsszzz (17位数字，包含毫秒)
+        var match2 = fileName.match(/(\d{17})/)
+        if (match2) {
+            var timeStr2 = match2[1]
+            var year2 = parseInt(timeStr2.substring(0, 4))
+            var month2 = parseInt(timeStr2.substring(4, 6))
+            var day2 = parseInt(timeStr2.substring(6, 8))
+            var hour2 = parseInt(timeStr2.substring(8, 10))
+            var minute2 = parseInt(timeStr2.substring(10, 12))
+            var second2 = parseInt(timeStr2.substring(12, 14))
+            var millisecond2 = parseInt(timeStr2.substring(14, 17))
+            return new Date(year2, month2 - 1, day2, hour2, minute2, second2, millisecond2).getTime()
+        }
+        
+        // 格式3: yyyy-MM-dd_HH:mm:ss 或 yyyy-MM-dd HH:mm:ss
+        var match3 = fileName.match(/(\d{4})-(\d{2})-(\d{2})[_\s](\d{2}):(\d{2}):(\d{2})/)
+        if (match3) {
+            var year3 = parseInt(match3[1])
+            var month3 = parseInt(match3[2])
+            var day3 = parseInt(match3[3])
+            var hour3 = parseInt(match3[4])
+            var minute3 = parseInt(match3[5])
+            var second3 = parseInt(match3[6])
+            return new Date(year3, month3 - 1, day3, hour3, minute3, second3).getTime()
+        }
+        
+        // 格式4: yyyyMMdd (8位数字，日期)
+        var match4 = fileName.match(/(\d{8})/)
+        if (match4) {
+            var timeStr4 = match4[1]
+            var year4 = parseInt(timeStr4.substring(0, 4))
+            var month4 = parseInt(timeStr4.substring(4, 6))
+            var day4 = parseInt(timeStr4.substring(6, 8))
+            return new Date(year4, month4 - 1, day4).getTime()
+        }
+        
+        // 如果找不到时间，返回0（会排到最后）
+        return 0
+    }
 
     NetworkCallable {
         id: deviceImageList
@@ -1168,6 +1390,9 @@ FluPopup {
                         console.debug("get_img_list returned error or no data:", res.msg);
                         root.downloadedImages = [];
                     }
+
+                    // 先收集所有镜像数据到数组
+                    var imageList = []
 
                     // 首先添加本地模型中的镜像
                     for (var i = 0; i < imagesModel.rowCount(); i++) {
@@ -1186,15 +1411,16 @@ FluPopup {
                         if (isDownloaded) {
                             displayText += qsTr(" (已上传)");
                         }
-                        if (version) {
-                            displayText += " - " + version;
-                        }
+                        // if (version) {
+                        //     displayText += " - " + version;
+                        // }
 
-                        localImagesModel.append({
+                        imageList.push({
                             "displayText": displayText,
                             "fileName": fileName,
                             "name": name, // 镜像版本，用于与主机比较
-                            "path": path
+                            "path": path,
+                            "isDownloaded": isDownloaded
                         });
                     }
 
@@ -1216,14 +1442,34 @@ FluPopup {
                         // 如果主机镜像不在本地模型中，添加到列表
                         if (!isInLocalModel) {
                             var displayText = hostRepo + qsTr(" (已上传)");
-                            localImagesModel.append({
+                            imageList.push({
                                 "displayText": displayText,
                                 "fileName": hostRepo, // 使用镜像版本作为文件名
                                 "name": hostRepo, // 镜像版本
-                                "path": "" // 主机镜像没有本地路径
+                                "path": "", // 主机镜像没有本地路径
+                                "isDownloaded": true
                             });
                         }
                     }
+
+                    // 按镜像名中的时间降序排序
+                    imageList.sort((a, b) => {
+                        var timeA = extractTimeFromFileName(a.fileName)
+                        var timeB = extractTimeFromFileName(b.fileName)
+                        if (timeA === 0 && timeB === 0) {
+                            // 如果都没有时间，按文件名排序
+                            return b.fileName.localeCompare(a.fileName)
+                        }
+                        if (timeA === 0) return 1  // 没有时间的排到最后
+                        if (timeB === 0) return -1
+                        return timeB - timeA  // 降序
+                    })
+
+                    // 将排序后的数据添加到模型
+                    for (var m = 0; m < imageList.length; m++) {
+                        localImagesModel.append(imageList[m])
+                    }
+
                     if (localImagesModel.count > 0) {
                         imageComboBox.currentIndex = 0;
                     } else {
@@ -1269,7 +1515,7 @@ FluPopup {
                                 // 可见了，发起创建
                                 var p = root.pendingCreate
                                 root.pendingCreate = null
-                                reqCreateDevice(p.ip, p.name, p.repoName, p.resolution, p.selinux, p.dns, p.num, p.adiName, p.adiPass)
+                                reqCreateDevice(p.ip, p.name, p.repoName, p.resolution, p.selinux, p.dns, p.num, p.adiName, p.adiPass, p.boolMacvlan || false)
                             } else if (root.adiPollLeft > 0) {
                                 root.adiPollLeft -= 1
                                 adiPollTimer.start()
@@ -1277,7 +1523,7 @@ FluPopup {
                                 // 超时也尝试创建一次（有些后端不暴露列表，但已可用）
                                 var p2 = root.pendingCreate
                                 root.pendingCreate = null
-                                reqCreateDevice(p2.ip, p2.name, p2.repoName, p2.resolution, p2.selinux, p2.dns, p2.num, p2.adiName, p2.adiPass)
+                                reqCreateDevice(p2.ip, p2.name, p2.repoName, p2.resolution, p2.selinux, p2.dns, p2.num, p2.adiName, p2.adiPass, p2.boolMacvlan || false)
                             }
                         }
                         // 如果有结构化数据（brand/model），则更新品牌机型；本次接口只提供文件名则跳过
@@ -1365,9 +1611,9 @@ FluPopup {
     }
 
     // 创建云机
-    function reqCreateDevice(ip, padName, image_url, resolution, selinux, dns, count, adiName, adiPass){
+    function reqCreateDevice(ip, padName, image_url, resolution, selinux, dns, count, adiName, adiPass, boolMacvlan){
         if (!guardStorageOrWarn()) return
-        console.log("create with adiName:", adiName)
+        console.log("create with adiName:", adiName, "boolMacvlan:", boolMacvlan)
         
         Network.postJson(`http://${ip}:18182/container_api/v1` + "/create")
         .add("user_name", padName)
@@ -1379,6 +1625,7 @@ FluPopup {
         .add("adiName", adiName || "")
         .add("adiPass", adiPass || "")
         .add("bool_start", root.boolStart)
+        .add("bool_macvlan", boolMacvlan || false)
         .setUserData(ip)
         .bind(root)
         .go(createDevice)

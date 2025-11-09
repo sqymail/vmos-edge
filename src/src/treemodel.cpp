@@ -111,6 +111,7 @@ QByteArray TreeModel::toJson() const
                         deviceObject["tcpVideoPort"] = deviceData.tcpVideoPort;
                         deviceObject["tcpAudioPort"] = deviceData.tcpAudioPort;
                         deviceObject["tcpControlPort"] = deviceData.tcpControlPort;
+                        deviceObject["macvlanIp"] = deviceData.macvlanIp;
                         devicesArray.append(deviceObject);
                     }
                 }
@@ -469,6 +470,7 @@ void TreeModel::addDevice(const QString& hostIp, const QVariantMap &deviceDataMa
     deviceData.checked = false;
     deviceData.selected = false;
     deviceData.refresh = false;
+    deviceData.macvlanIp = deviceDataMap.contains("macvlan_ip") ? deviceDataMap["macvlan_ip"].toString() : (deviceDataMap.contains("macvlanIp") ? deviceDataMap["macvlanIp"].toString() : "");
 
     qDebug() << "add device" << deviceData.groupId << deviceData.hostId << deviceData.name;
 
@@ -504,6 +506,8 @@ void TreeModel::addDevice(const QString& hostIp, const QVariantMap &deviceDataMa
                 if (deviceDataMap.contains("aospVersion")) existingDevice.aospVersion = deviceDataMap["aospVersion"].toString();
                 if (deviceDataMap.contains("host_ip")) existingDevice.hostIp = deviceDataMap["host_ip"].toString();
                 if (deviceDataMap.contains("hostIp")) existingDevice.hostIp = deviceDataMap["hostIp"].toString();
+                if (deviceDataMap.contains("macvlan_ip")) existingDevice.macvlanIp = deviceDataMap["macvlan_ip"].toString();
+                if (deviceDataMap.contains("macvlanIp")) existingDevice.macvlanIp = deviceDataMap["macvlanIp"].toString();
 
                 existingDevice.checked = checked;
                 existingDevice.selected = selected;
@@ -854,6 +858,8 @@ void TreeModel::modifyDevice(const QString& name, const QVariantMap& newData)
         else if (key == "width" && devicePtr->width != value.toString()) { devicePtr->width = value.toString(); changedRoles.append(WidthRole); }
         else if (key == "aospVersion" && devicePtr->aospVersion != value.toString()) { devicePtr->aospVersion = value.toString(); changedRoles.append(AospVersionRole); }
         else if (key == "hostIp" && devicePtr->hostIp != value.toString()) { devicePtr->hostIp = value.toString(); changedRoles.append(HostIpRole); }
+        else if (key == "macvlanIp" && devicePtr->macvlanIp != value.toString()) { devicePtr->macvlanIp = value.toString(); changedRoles.append(MacvlanIpRole); }
+        else if (key == "macvlan_ip" && devicePtr->macvlanIp != value.toString()) { devicePtr->macvlanIp = value.toString(); changedRoles.append(MacvlanIpRole); }
     }
 
     if (!changedRoles.isEmpty()) {
@@ -915,6 +921,8 @@ void TreeModel::modifyDeviceEx(const QString &shortId, const QVariantMap &newDat
         else if (key == "width" && devicePtr->width != value.toString()) { devicePtr->width = value.toString(); changedRoles.append(WidthRole); }
         else if (key == "aospVersion" && devicePtr->aospVersion != value.toString()) { devicePtr->aospVersion = value.toString(); changedRoles.append(AospVersionRole); }
         else if (key == "hostIp" && devicePtr->hostIp != value.toString()) { devicePtr->hostIp = value.toString(); changedRoles.append(HostIpRole); }
+        else if (key == "macvlanIp" && devicePtr->macvlanIp != value.toString()) { devicePtr->macvlanIp = value.toString(); changedRoles.append(MacvlanIpRole); }
+        else if (key == "macvlan_ip" && devicePtr->macvlanIp != value.toString()) { devicePtr->macvlanIp = value.toString(); changedRoles.append(MacvlanIpRole); }
     }
 
     if (!changedRoles.isEmpty()) {
@@ -1007,6 +1015,8 @@ void TreeModel::updateDevice(const QString& dbId, const QVariantMap& device)
         else if (key == "width" && devicePtr->width != value.toString()) { devicePtr->width = value.toString(); changedRoles.append(WidthRole); }
         else if (key == "aospVersion" && devicePtr->aospVersion != value.toString()) { devicePtr->aospVersion = value.toString(); changedRoles.append(AospVersionRole); }
         else if (key == "hostIp" && devicePtr->hostIp != value.toString()) { devicePtr->hostIp = value.toString(); changedRoles.append(HostIpRole); }
+        else if (key == "macvlanIp" && devicePtr->macvlanIp != value.toString()) { devicePtr->macvlanIp = value.toString(); changedRoles.append(MacvlanIpRole); }
+        else if (key == "macvlan_ip" && devicePtr->macvlanIp != value.toString()) { devicePtr->macvlanIp = value.toString(); changedRoles.append(MacvlanIpRole); }
     }
 
     // 恢复勾选/选中状态
@@ -1015,17 +1025,36 @@ void TreeModel::updateDevice(const QString& dbId, const QVariantMap& device)
 
     if (!changedRoles.isEmpty()) {
         QModelIndex deviceIndex = findIndex(dbId, TypeDevice);
+        QModelIndex hostIndex;
+        if (!hostId.isEmpty()) {
+            hostIndex = findIndex(hostId, TypeHost);
+        }
+        
         if (deviceIndex.isValid()) {
             DeviceItem* deviceItem = static_cast<DeviceItem*>(deviceIndex.internalPointer());
             if (deviceItem) {
                 deviceItem->deviceData() = *devicePtr;
                 emit dataChanged(deviceIndex, deviceIndex, changedRoles);
             }
-        } else if (!hostId.isEmpty() && deviceRow >= 0) {
+            // 如果设备状态改变，需要通知主机节点更新 HostPadCountRole（用于显示过滤后的设备数量）
+            // 同时需要通知分组节点更新 GroupPadCountRole
+            if (changedRoles.contains(StateRole) && hostIndex.isValid()) {
+                emit dataChanged(hostIndex, hostIndex, {HostPadCountRole});
+                QModelIndex groupIndex = parent(hostIndex);
+                if (groupIndex.isValid()) {
+                    emit dataChanged(groupIndex, groupIndex, {GroupPadCountRole});
+                }
+            }
+        } else if (hostIndex.isValid()) {
             // 索引缺失时，尝试通过父节点发出粗粒度变更
-            QModelIndex hostIndex = findIndex(hostId, TypeHost);
-            if (hostIndex.isValid()) {
-                emit dataChanged(hostIndex, hostIndex, changedRoles);
+            emit dataChanged(hostIndex, hostIndex, changedRoles);
+            // 如果设备状态改变，也需要更新 HostPadCountRole 和 GroupPadCountRole
+            if (changedRoles.contains(StateRole)) {
+                emit dataChanged(hostIndex, hostIndex, {HostPadCountRole});
+                QModelIndex groupIndex = parent(hostIndex);
+                if (groupIndex.isValid()) {
+                    emit dataChanged(groupIndex, groupIndex, {GroupPadCountRole});
+                }
             }
         }
         saveConfig();
@@ -1107,6 +1136,12 @@ void TreeModel::modifyHost(const QString& hostIp, const QVariantMap& newData)
                             QModelIndex deviceIndex = index(i, 0, hostIndex);
                             emit dataChanged(deviceIndex, deviceIndex, {StateRole});
                         }
+                    }
+                    
+                    // 主机状态改变时，需要通知分组更新 GroupPadCountRole（用于显示过滤后的设备数量）
+                    QModelIndex groupIndex = parent(hostIndex);
+                    if (groupIndex.isValid()) {
+                        emit dataChanged(groupIndex, groupIndex, {GroupPadCountRole});
                     }
                 }
             }
@@ -1307,6 +1342,19 @@ void TreeModel::parseDevice(const QJsonObject& padObject, DeviceData& device)
     device.width = padObject["width"].toString();
     device.aospVersion = aospVersion.isEmpty() ? padObject["aosp_version"].toString() : aospVersion;
     device.hostIp = hostIp.isEmpty() ? padObject["host_ip"].toString() : hostIp;
+    // Macvlan IP字段
+    // 接口返回的字段名为 macvlan_ip
+    // 配置文件保存的字段名为 macvlanIp
+    // 优先使用接口字段名（下划线），如果不存在则使用配置文件字段名（驼峰）
+    QJsonValue macvlanIpValue;
+    if (padObject.contains("macvlan_ip")) {
+        // 从接口数据读取（下划线命名）
+        macvlanIpValue = padObject["macvlan_ip"];
+    } else {
+        // 从配置文件读取（驼峰命名）
+        macvlanIpValue = padObject["macvlanIp"];
+    }
+    device.macvlanIp = macvlanIpValue.toString();
     // TCP端口字段
     // 接口返回的字段名为 tcp_port, tcp_audio_port, tcp_control_port
     // 配置文件保存的字段名为 tcpVideoPort, tcpAudioPort, tcpControlPort
@@ -1521,6 +1569,7 @@ QVariant TreeModel::data(const QModelIndex &index, int role) const
                     qDebug() << "data() TcpControlPortRole for" << device.dbId << "=" << device.tcpControlPort;
                     return device.tcpControlPort;
                 }
+                case MacvlanIpRole: return device.macvlanIp;
                 default: return QVariant();
             }
         }
@@ -1659,6 +1708,10 @@ bool TreeModel::setData(const QModelIndex &index, const QVariant &value, int rol
                     device.hostIp = value.toString();
                     success = true;
                     break;
+                case MacvlanIpRole:
+                    device.macvlanIp = value.toString();
+                    success = true;
+                    break;
                 default:
                     return false;
             }
@@ -1720,6 +1773,7 @@ QHash<int, QByteArray> TreeModel::roleNames() const
     roles[TcpVideoPortRole] = "tcpVideoPort";
     roles[TcpAudioPortRole] = "tcpAudioPort";
     roles[TcpControlPortRole] = "tcpControlPort";
+    roles[MacvlanIpRole] = "macvlanIp";
     return roles;
 }
 
@@ -2077,6 +2131,7 @@ void TreeModel::updateDeviceList(const QString &hostIp, const QVariantList &newD
             if (oldDevice.tcpVideoPort != newDeviceFromServer.tcpVideoPort) { oldDevice.tcpVideoPort = newDeviceFromServer.tcpVideoPort; changedRoles.append(TcpVideoPortRole); }
             if (oldDevice.tcpAudioPort != newDeviceFromServer.tcpAudioPort) { oldDevice.tcpAudioPort = newDeviceFromServer.tcpAudioPort; changedRoles.append(TcpAudioPortRole); }
             if (oldDevice.tcpControlPort != newDeviceFromServer.tcpControlPort) { oldDevice.tcpControlPort = newDeviceFromServer.tcpControlPort; changedRoles.append(TcpControlPortRole); }
+            if (oldDevice.macvlanIp != newDeviceFromServer.macvlanIp) { oldDevice.macvlanIp = newDeviceFromServer.macvlanIp; changedRoles.append(MacvlanIpRole); }
 
             if (!changedRoles.isEmpty()) {
                 // 同步更新 backingDeviceList（m_devicesByHost 的引用），这样 toJson() 才能正确序列化
@@ -2292,6 +2347,8 @@ void TreeModel::updateDeviceListV3(const QString &hostIp, const QVariantList &pa
         if (m.contains("aosp_version")) updateIf("aosp_version", m.value("aosp_version"), dev.aospVersion, AospVersionRole);
         // if (m.contains("hostIp")) updateIf("hostIp", m.value("hostIp"), dev.hostIp, HostIpRole);
         if (m.contains("host_ip")) updateIf("host_ip", m.value("host_ip"), dev.hostIp, HostIpRole);
+        if (m.contains("macvlan_ip")) updateIf("macvlan_ip", m.value("macvlan_ip"), dev.macvlanIp, MacvlanIpRole);
+        if (m.contains("macvlanIp")) updateIf("macvlanIp", m.value("macvlanIp"), dev.macvlanIp, MacvlanIpRole);
         if (m.contains("created")) updateIf("created", m.value("created"), dev.created, CreatedRole);
         if (m.contains("id")) updateIf("id", m.value("id"), dev.id, IdRole);
 
@@ -2300,6 +2357,16 @@ void TreeModel::updateDeviceListV3(const QString &hostIp, const QVariantList &pa
             static_cast<DeviceItem*>(deviceIndex.internalPointer())->deviceData() = dev;
             emit dataChanged(deviceIndex, deviceIndex, changedRoles);
             anyChanged = true;
+            
+            // 如果设备状态改变，需要通知主机节点更新 HostPadCountRole（用于显示过滤后的设备数量）
+            // 同时需要通知分组节点更新 GroupPadCountRole
+            if (changedRoles.contains(StateRole)) {
+                emit dataChanged(hostIndex, hostIndex, {HostPadCountRole});
+                QModelIndex groupIndex = parent(hostIndex);
+                if (groupIndex.isValid()) {
+                    emit dataChanged(groupIndex, groupIndex, {GroupPadCountRole});
+                }
+            }
         }
     }
 

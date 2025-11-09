@@ -1,5 +1,9 @@
 #include "selectedlistmodel.h"
+#include "treeproxymodel.h"
 #include <QDebug>
+#include <QMap>
+#include <QPair>
+#include <QSet>
 
 SelectedListModel::SelectedListModel(QObject *parent)
     : QAbstractListModel(parent)
@@ -63,6 +67,7 @@ QVariant SelectedListModel::data(const QModelIndex &index, int role) const
         case DeviceRoles::TcpVideoPortRole: return device.tcpVideoPort;
         case DeviceRoles::TcpAudioPortRole: return device.tcpAudioPort;
         case DeviceRoles::TcpControlPortRole: return device.tcpControlPort;
+        case DeviceRoles::MacvlanIpRole: return device.macvlanIp;
         default: return QVariant();
     }
 }
@@ -105,6 +110,180 @@ bool SelectedListModel::setData(const QModelIndex &index, const QVariant &value,
 QHash<int, QByteArray> SelectedListModel::roleNames() const
 {
     return m_sourceModel ? m_sourceModel->roleNames() : QHash<int, QByteArray>();
+}
+
+void SelectedListModel::setProxyModel(TreeProxyModel *proxyModel)
+{
+    if (m_proxyModel) {
+        disconnect(m_proxyModel, &TreeProxyModel::showRunningOnlyChanged, this, &SelectedListModel::onFilterChanged);
+        disconnect(m_proxyModel, &TreeProxyModel::showAllDevicesChanged, this, &SelectedListModel::onFilterChanged);
+        disconnect(m_proxyModel, &TreeProxyModel::searchFilterChanged, this, &SelectedListModel::onFilterChanged);
+    }
+
+    m_proxyModel = proxyModel;
+
+    if (m_proxyModel) {
+        connect(m_proxyModel, &TreeProxyModel::showRunningOnlyChanged, this, &SelectedListModel::onFilterChanged);
+        connect(m_proxyModel, &TreeProxyModel::showAllDevicesChanged, this, &SelectedListModel::onFilterChanged);
+        connect(m_proxyModel, &TreeProxyModel::searchFilterChanged, this, &SelectedListModel::onFilterChanged);
+    }
+}
+
+void SelectedListModel::onFilterChanged()
+{
+    // 当过滤条件改变时，更新所有设备的数据
+    updateAllDevicesData();
+}
+
+bool SelectedListModel::matchesFilter(const QModelIndex& deviceIndex) const
+{
+    if (!m_proxyModel) return true;
+    
+    // 检查搜索过滤
+    QString searchFilter = m_proxyModel->searchFilter();
+    if (!searchFilter.isEmpty()) {
+        QString displayName = m_sourceModel->data(deviceIndex, DeviceRoles::DisplayNameRole).toString();
+        QString hostIp = m_sourceModel->data(deviceIndex, DeviceRoles::HostIpRole).toString();
+        if (!displayName.contains(searchFilter, Qt::CaseInsensitive) && 
+            !hostIp.contains(searchFilter, Qt::CaseInsensitive)) {
+            return false;
+        }
+    }
+    
+    // 检查状态过滤
+    bool showRunningOnly = m_proxyModel->showRunningOnly();
+    bool showAllDevices = m_proxyModel->showAllDevices();
+    
+    if (showRunningOnly && !showAllDevices) {
+        QString state = m_sourceModel->data(deviceIndex, DeviceRoles::StateRole).toString();
+        if (state != "running") {
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+void SelectedListModel::updateAllDevicesData()
+{
+    if (!m_sourceModel || !m_proxyModel) return;
+
+    // 保存当前列表中设备的本地状态（checked, selected, refresh）
+    QMap<QString, QPair<bool, QPair<bool, bool>>> localStates;
+    for (const auto& device : qAsConst(m_selectedDevices)) {
+        localStates[device.dbId] = qMakePair(device.checked, qMakePair(device.selected, device.refresh));
+    }
+
+    // 重新构建列表：遍历源模型中所有被勾选的设备，只保留符合过滤条件的
+    QList<DeviceData> newSelectedDevices;
+    
+    for (int gi = 0; gi < m_sourceModel->rowCount(QModelIndex()); ++gi) {
+        QModelIndex groupIndex = m_sourceModel->index(gi, 0, QModelIndex());
+        for (int hi = 0; hi < m_sourceModel->rowCount(groupIndex); ++hi) {
+            QModelIndex hostIndex = m_sourceModel->index(hi, 0, groupIndex);
+            for (int di = 0; di < m_sourceModel->rowCount(hostIndex); ++di) {
+                QModelIndex deviceIndex = m_sourceModel->index(di, 0, hostIndex);
+                if (m_sourceModel->data(deviceIndex, DeviceRoles::ItemTypeRole) == TreeModel::TypeDevice) {
+                    // 只处理被勾选的设备
+                    if (m_sourceModel->data(deviceIndex, DeviceRoles::CheckedRole).toBool()) {
+                        // 检查设备是否符合当前的过滤条件
+                        if (matchesFilter(deviceIndex)) {
+                            DeviceData device = m_sourceModel->data(deviceIndex, DeviceRoles::ItemDataRole).value<DeviceData>();
+                            
+                            // 恢复本地状态
+                            if (localStates.contains(device.dbId)) {
+                                auto state = localStates[device.dbId];
+                                device.checked = state.first;
+                                device.selected = state.second.first;
+                                device.refresh = state.second.second;
+                            } else {
+                                device.checked = true;
+                                device.selected = false;
+                                device.refresh = false;
+                            }
+                            
+                            newSelectedDevices.append(device);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // 比较新旧列表，找出需要添加、移除和更新的设备
+    QSet<QString> oldDbIds;
+    for (const auto& device : qAsConst(m_selectedDevices)) {
+        oldDbIds.insert(device.dbId);
+    }
+    
+    QSet<QString> newDbIds;
+    for (const auto& device : qAsConst(newSelectedDevices)) {
+        newDbIds.insert(device.dbId);
+    }
+
+    // 移除不再符合条件的设备
+    for (int i = m_selectedDevices.count() - 1; i >= 0; --i) {
+        if (!newDbIds.contains(m_selectedDevices[i].dbId)) {
+            beginRemoveRows(QModelIndex(), i, i);
+            m_selectedDevices.removeAt(i);
+            endRemoveRows();
+        }
+    }
+
+    // 添加新符合条件的设备或更新现有设备
+    for (const auto& newDevice : qAsConst(newSelectedDevices)) {
+        int existingRow = -1;
+        for (int i = 0; i < m_selectedDevices.count(); ++i) {
+            if (m_selectedDevices[i].dbId == newDevice.dbId) {
+                existingRow = i;
+                break;
+            }
+        }
+
+        if (existingRow >= 0) {
+            // 更新现有设备的数据
+            DeviceData& localDevice = m_selectedDevices[existingRow];
+            bool local_checked = localDevice.checked;
+            bool local_selected = localDevice.selected;
+            bool local_refresh = localDevice.refresh;
+            
+            localDevice = newDevice;
+            localDevice.checked = local_checked;
+            localDevice.selected = local_selected;
+            localDevice.refresh = local_refresh;
+            
+            // 通知数据变化
+            QVector<int> changedRoles;
+            changedRoles.append(StateRole);
+            changedRoles.append(DisplayNameRole);
+            changedRoles.append(ImageRole);
+            changedRoles.append(AdbRole);
+            changedRoles.append(DataRole);
+            changedRoles.append(DnsRole);
+            changedRoles.append(DpiRole);
+            changedRoles.append(FpsRole);
+            changedRoles.append(HeightRole);
+            changedRoles.append(IpRole);
+            changedRoles.append(MemoryRole);
+            changedRoles.append(NameRole);
+            changedRoles.append(ShortIdRole);
+            changedRoles.append(WidthRole);
+            changedRoles.append(AospVersionRole);
+            changedRoles.append(HostIpRole);
+            changedRoles.append(TcpVideoPortRole);
+            changedRoles.append(TcpAudioPortRole);
+            changedRoles.append(TcpControlPortRole);
+            changedRoles.append(MacvlanIpRole);
+            
+            emit dataChanged(index(existingRow, 0), index(existingRow, 0), changedRoles);
+        } else {
+            // 添加新设备
+            int insertRow = m_selectedDevices.count();
+            beginInsertRows(QModelIndex(), insertRow, insertRow);
+            m_selectedDevices.append(newDevice);
+            endInsertRows();
+        }
+    }
 }
 
 void SelectedListModel::onSourceReset()
@@ -159,8 +338,11 @@ void SelectedListModel::onSourceDataChanged(const QModelIndex &topLeft, const QM
             }
         }
 
-        if (isChecked && existingRow == -1) {
-            // Add to this model
+        // 检查设备是否符合过滤条件
+        bool matchesFilterCondition = matchesFilter(sourceIndex);
+
+        if (isChecked && existingRow == -1 && matchesFilterCondition) {
+            // Add to this model (only if matches filter)
             int insertRow = m_selectedDevices.count();
             beginInsertRows(QModelIndex(), insertRow, insertRow);
             // 如果源模型中 checked 为 true，默认在 selectedlistmodel 中也设置为 true
@@ -169,12 +351,12 @@ void SelectedListModel::onSourceDataChanged(const QModelIndex &topLeft, const QM
             device.refresh = false;
             m_selectedDevices.append(device);
             endInsertRows();
-        } else if (!isChecked && existingRow != -1) {
-            // Remove from this model
+        } else if ((!isChecked || !matchesFilterCondition) && existingRow != -1) {
+            // Remove from this model if unchecked or doesn't match filter
             beginRemoveRows(QModelIndex(), existingRow, existingRow);
             m_selectedDevices.removeAt(existingRow);
             endRemoveRows();
-        } else if (isChecked && existingRow != -1) {
+        } else if (isChecked && existingRow != -1 && matchesFilterCondition) {
             // Data of an already selected item changed in the source model.
             // We need to update our copy, but preserve our local state for checked, selected, refresh.
             DeviceData& localDevice = m_selectedDevices[existingRow];
