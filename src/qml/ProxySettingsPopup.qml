@@ -8,7 +8,7 @@ FluPopup {
     id: root
     implicitWidth: 420
     padding: 0
-    closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+    closePolicy: Popup.CloseOnEscape
     
     property var modelData: null
     property string cloudMachineName: ""
@@ -119,9 +119,9 @@ FluPopup {
         accountInput.text = ""
         passwordInput.text = ""
         
-        // 重置开关状态（开关已被注释，不再需要重置）
-        // udpDisabledSwitch.checked = true
-        // dnsOverProxyDisabledSwitch.checked = true
+        // 重置开关状态
+        udpEnabledSwitch.checked = true
+        dnsOverProxyEnabledSwitch.checked = true
         
         // 重置到设置页面
         root.currentPage = 0
@@ -274,89 +274,89 @@ FluPopup {
                         }
                     }
 
-                    // 是否禁用DNS走代理
-                    // ColumnLayout {
-                    //     Layout.fillWidth: true
-                    //     spacing: 8
+                    //是否禁用DNS走代理
+                    ColumnLayout {
+                        Layout.fillWidth: true
+                        spacing: 8
 
-                    //     RowLayout {
-                    //         Layout.fillWidth: true
-                    //         spacing: 8
+                        RowLayout {
+                            Layout.fillWidth: true
+                            spacing: 8
 
-                    //         FluText {
-                    //             text: qsTr("代理DNS")
-                    //             font.bold: true
-                    //         }
+                            FluText {
+                                text: qsTr("代理DNS")
+                                font.bold: true
+                            }
 
-                    //         Image {
-                    //             id: macvlanIcon
-                    //             source: "qrc:/res/pad/help.svg"
-                    //             scale: 0.8
+                            Image {
+                                id: macvlanIcon
+                                source: "qrc:/res/pad/help.svg"
+                                scale: 0.8
 
-                    //             FluTooltip {
-                    //                 parent: macvlanIcon
-                    //                 visible: macvlanMouseArea.containsMouse
-                    //                 text: qsTr("开启代理DNS需要确保您的代理IP支持DNS解析，\n否则云手机将无法联网；关闭代理DNS可能会导致DNS泄露。")
-                    //                 delay: 500
-                    //                 timeout: 3000
-                    //             }
+                                FluTooltip {
+                                    parent: macvlanIcon
+                                    visible: macvlanMouseArea.containsMouse
+                                    text: qsTr("开启代理DNS需要确保您的代理IP支持DNS解析，\n否则云手机将无法联网；关闭代理DNS可能会导致DNS泄露。")
+                                    delay: 500
+                                    timeout: 3000
+                                }
 
-                    //             MouseArea {
-                    //                 id: macvlanMouseArea
-                    //                 anchors.fill: parent
-                    //                 hoverEnabled: true
-                    //             }
-                    //         }
+                                MouseArea {
+                                    id: macvlanMouseArea
+                                    anchors.fill: parent
+                                    hoverEnabled: true
+                                }
+                            }
 
-                    //         FluToggleSwitch{
-                    //             id: dnsOverProxyDisabledSwitch
-                    //             checkColor: ThemeUI.primaryColor
-                    //         }
+                            FluToggleSwitch{
+                                id: dnsOverProxyEnabledSwitch
+                                checkColor: ThemeUI.primaryColor
+                            }
 
-                    //         FluText{
-                    //             text: qsTr("注意：如果开启后云手机无网络，请关闭代理DNS。")
-                    //             color: ThemeUI.primaryColor
-                    //             font.pixelSize: 10
-                    //         }
-                    //     }
+                            FluText{
+                                text: qsTr("注意：如果开启后云手机无网络，请关闭代理DNS。")
+                                color: ThemeUI.primaryColor
+                                font.pixelSize: 10
+                            }
+                        }
 
-                    // }
+                    }
 
-                    // // 是否禁用UDP
-                    // RowLayout {
-                    //     Layout.fillWidth: true
-                    //     spacing: 8
+                    // 是否禁用UDP
+                    RowLayout {
+                        Layout.fillWidth: true
+                        spacing: 8
 
-                    //     FluText {
-                    //         text: qsTr("开启UDP")
-                    //         font.bold: true
-                    //     }
+                        FluText {
+                            text: qsTr("开启UDP")
+                            font.bold: true
+                        }
 
-                    //     Image {
-                    //         id: udpIcon
-                    //         source: "qrc:/res/pad/help.svg"
-                    //         scale: 0.8
+                        Image {
+                            id: udpIcon
+                            source: "qrc:/res/pad/help.svg"
+                            scale: 0.8
 
-                    //         FluTooltip {
-                    //             parent: udpIcon
-                    //             visible: udpMouseArea.containsMouse
-                    //             text: qsTr("启用 UDP 通道传输")
-                    //             delay: 500
-                    //             timeout: 3000
-                    //         }
+                            FluTooltip {
+                                parent: udpIcon
+                                visible: udpMouseArea.containsMouse
+                                text: qsTr("启用 UDP 通道传输")
+                                delay: 500
+                                timeout: 3000
+                            }
 
-                    //         MouseArea {
-                    //             id: udpMouseArea
-                    //             anchors.fill: parent
-                    //             hoverEnabled: true
-                    //         }
-                    //     }
+                            MouseArea {
+                                id: udpMouseArea
+                                anchors.fill: parent
+                                hoverEnabled: true
+                            }
+                        }
 
-                    //     FluToggleSwitch{
-                    //         id: udpDisabledSwitch
-                    //         checkColor: ThemeUI.primaryColor
-                    //     }
-                    // }
+                        FluToggleSwitch{
+                            id: udpEnabledSwitch
+                            checkColor: ThemeUI.primaryColor
+                        }
+                    }
 
                     Item { Layout.preferredHeight: 10 }
                     RowLayout {
@@ -455,15 +455,16 @@ FluPopup {
                                 }
 
                                 // 构建设置对象
-                                // 注意：udpDisabledSwitch 和 dnsOverProxyDisabledSwitch 已被注释，使用默认值
                                 var settings = {
                                     protocol: protocol,
                                     serverAddress: serverAddressInput.text.trim(),
                                     port: parseInt(portInput.text),
                                     account: accountInput.text.trim(),
                                     password: passwordInput.text.trim(),
-                                    udpDisabled: false,  // 默认值：UDP启用
-                                    dnsOverProxyDisabled: false  // 默认值：DNS走代理启用
+                                    // udpDisabled: false,  // 默认值：UDP启用
+                                    // dnsOverProxyDisabled: false  // 默认值：DNS走代理启用
+                                    udpDisabled: !udpEnabledSwitch.checked,
+                                    dnsOverProxyDisabled: !dnsOverProxyEnabledSwitch.checked
                                 }
 
                                 // 判断是批量设置还是单个设置
