@@ -9,6 +9,8 @@
 #include <QEventLoop>
 #include <QElapsedTimer>
 #include <QMap>
+#include <QProcess>
+#include <QDir>
 
 DeviceScanner::DeviceScanner(QObject *parent)
     : QObject(parent),
@@ -315,6 +317,21 @@ void DeviceScanner::stopDiscovery()
                  << "ID:" << device["id"].toString() << "Name:" << device["name"].toString();
     }
     qWarning() << "======================================== DeviceScanner: END ========================================";
+}
+
+void DeviceScanner::startProcess(const QString& hostIp)
+{
+    auto path = QDir::currentPath() + "/cbs/upgrade.bat";
+    QStringList args;
+
+#if 0
+    args << "/C" << path << hostIp;
+    bool ret = QProcess::startDetached("cmd.exe", args);
+#else
+    args << QString("'%1 %2'").arg(path, hostIp);
+    auto ret = QProcess::startDetached("powershell.exe", args);
+#endif
+    qDebug() << args << " excute ret ：" << ret;
 }
 
 void DeviceScanner::onScanTimeout()

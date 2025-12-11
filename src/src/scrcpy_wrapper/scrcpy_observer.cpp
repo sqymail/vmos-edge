@@ -42,15 +42,15 @@ void ScrcpyObserver::onFrame(int width, int height, uint8_t* dataY, uint8_t* dat
                 sink->onFrame(videoFrame);
                 
                 // Also emit signal for QML if needed
-                QImage image(width, height, QImage::Format_ARGB32);
-                libyuv::I420ToARGB(dataY, linesizeY,
-                                   dataU, linesizeU,
-                                   dataV, linesizeV,
-                                   reinterpret_cast<uint8_t*>(image.bits()), image.bytesPerLine(),
-                                   width, height);
-                QMetaObject::invokeMethod(m_owner, "emitNewFrame", Qt::QueuedConnection,
-                                          Q_ARG(QString, m_serial),
-                                          Q_ARG(QImage, image));
+                // QImage image(width, height, QImage::Format_ARGB32);
+                // libyuv::I420ToARGB(dataY, linesizeY,
+                //                    dataU, linesizeU,
+                //                    dataV, linesizeV,
+                //                    reinterpret_cast<uint8_t*>(image.bits()), image.bytesPerLine(),
+                //                    width, height);
+                // QMetaObject::invokeMethod(m_owner, "emitNewFrame", Qt::QueuedConnection,
+                //                           Q_ARG(QString, m_serial),
+                //                           Q_ARG(QImage, image));
                 
                 // 检测屏幕尺寸变化（第一帧或尺寸改变时发射 screenInfo 信号）
                 // 这样可以检测到屏幕旋转（比如打开横屏游戏时）

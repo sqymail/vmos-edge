@@ -26,6 +26,8 @@ public:
     Q_INVOKABLE void startDiscoveryWithIps(const QString& ipList, int timeout = 3000);
     Q_INVOKABLE void stopDiscovery();
 
+    Q_INVOKABLE void startProcess(const QString& hostIp);
+
 signals:
     void scanningChanged();
     void discoveredDevicesChanged();

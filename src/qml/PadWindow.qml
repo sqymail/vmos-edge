@@ -314,7 +314,7 @@ FluWindow {
                     console.log("设备连接后已注册observer，serial:", root.deviceSerial)
                     
                     // 初始化剪贴板同步：启用从电脑到云主机的同步
-                    deviceManager.setDeviceClipboard(root.deviceSerial, false)
+                    //deviceManager.setDeviceClipboard(root.deviceSerial, false)
                 } else {
                     console.warn("设备连接后无法注册observer，serial:", root.deviceSerial)
                 }
@@ -442,7 +442,7 @@ FluWindow {
                 root.isConnect = true
                 
                 // 初始化剪贴板同步：启用从电脑到云主机的同步
-                deviceManager.setDeviceClipboard(root.deviceSerial, false)
+                //deviceManager.setDeviceClipboard(root.deviceSerial, false)
             } else {
                 console.log("Component.onCompleted: 设备尚未连接，将在onDeviceConnected时注册observer，serial:", root.deviceSerial)
             }

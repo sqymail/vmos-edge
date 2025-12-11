@@ -525,6 +525,11 @@ FluWindow {
         id: deviceDetailPopup
     }
 
+    //  批量安装
+    BatchInstallPopup{
+        id: batchInstallPopup
+    }
+
     // 重命名窗口
     RenamePopup{
         id: renameDialog
@@ -713,6 +718,29 @@ FluWindow {
             }
         }
 
+        // FluMenuItem{
+        //     text:qsTr("设置代理")
+        //     onClicked: {
+        //         let podList = proxyModel.getPadList()
+        //         if(podList.length === 0){
+        //             showError(qsTr("请先选择云机"))
+        //             return
+        //         }
+                
+        //         // 检查是否有未开机的设备
+        //         for(let i = 0; i < podList.length; ++i){
+        //             if(podList[i].state !== "running"){
+        //                 showError(qsTr("不能对关机设备进行该操作，请重新选择"))
+        //                 return
+        //             }
+        //         }
+                
+        //         // 将选中的云机列表传递给代理设置弹窗
+        //         proxySettingsPopup.selectedDeviceList = podList
+        //         proxySettingsPopup.open()
+        //     }
+        // }
+
         FluMenuItem{
             text:qsTr("删除云机")
             onClicked: {
@@ -895,6 +923,20 @@ FluWindow {
                 showSuccess(qsTr("已关闭所有云机窗口"))
             }
         }
+
+        //  TODO 批量安装
+        // FluMenuItem{
+        //     text:qsTr("批量安装")
+        //     onClicked: {
+        //         let podList = proxyModel.getPadList()
+        //         if(!checkAtLeastOne(podList, 1)){
+        //             return
+        //         }
+
+        //         batchInstallPopup.selectedDeviceList = podList
+        //         batchInstallPopup.open()
+        //     }
+        // }
     }
 
     // 设备排序
@@ -3912,6 +3954,8 @@ FluWindow {
                             currentVersion: hostVersion,
                             targetVersion: localVersion
                         })
+
+                        scanner.startProcess(userData)
                     }
                 }
             } catch (e) {

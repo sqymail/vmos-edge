@@ -2141,6 +2141,15 @@ void TreeModel::updateDeviceList(const QString &hostIp, const QVariantList &newD
             
             DeviceData newDeviceFromServer;
             parseDevice(QJsonObject::fromVariantMap(newDeviceMap), newDeviceFromServer);
+            if (newDeviceFromServer.hostIp.isEmpty())
+            {
+                newDeviceFromServer.hostIp = hostIp;
+            }
+
+            if (newDeviceFromServer.hostId.isEmpty())
+            {
+                newDeviceFromServer.hostId = hostId;
+            }
 
             QVector<int> changedRoles;
 

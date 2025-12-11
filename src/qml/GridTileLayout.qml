@@ -15,6 +15,7 @@ Item {
     property int itemHeight: 139
     property int viewDirection: 0
     readonly property int bottomSpace: 32
+    property int updateTimes: 0
 
     signal clickMenuItem(string type, var model)
     signal visibleItemsChanged(var items)
@@ -167,6 +168,7 @@ Item {
 
         var visibleCount = 0;
         var totalCount = gridView.contentItem.children.length;
+        updateTimes++
         
         // 只遍历一次，同时进行可见性检查和截图更新
         for (var i = 0; i < totalCount; i++) {
@@ -197,11 +199,11 @@ Item {
                     // 添加时间戳参数避免缓存，确保每个设备获取独立的截图
                     var timestamp = new Date().getTime();
                     var dbId = modelData?.dbId || modelData?.db_id || modelData?.name;
-                    var screenshotUrl = `http://${modelData?.hostIp}:18182/container_api/v1/screenshots/${dbId}?t=${timestamp}`;
+                    var screenshotUrl = `http://${modelData?.hostIp}:18182/container_api/v1/screenshots/${dbId}?quality=${delegateItem.img1.quality}&t=${timestamp}`;
                     // console.log("===========url: ", dbId, screenshotUrl);
                     
-                    // 只有当URL真正改变时才更新，避免重复请求
-                    if (delegateItem.img1.imageUrl !== screenshotUrl) {
+                    // 错峰请求，避免同时请求导致带宽占用过大
+                    if ((i % 10) === (updateTimes % 10)) {
                         delegateItem.img1.imageUrl = screenshotUrl;
                     }
                 } else {
@@ -350,7 +352,8 @@ Item {
                             Layout.preferredWidth: root.viewDirection == 0 ? root.itemWidth  : root.itemHeight
                             Layout.preferredHeight: root.viewDirection == 0 ? root.itemHeight : root.itemWidth
                             rotation: root.viewDirection == 0 ? 0 : 270
-                            imageUrl: `http://${model?.hostIp}:18182/container_api/v1/screenshots/${model?.dbId || model?.db_id || model?.name}?t=${new Date().getTime()}`
+                            readonly property int quality: 10
+                            imageUrl: `http://${model?.hostIp}:18182/container_api/v1/screenshots/${model?.dbId || model?.db_id || model?.name}?quality=${quality}&t=${new Date().getTime()}`
 
                             Image{
                                 anchors.fill: parent

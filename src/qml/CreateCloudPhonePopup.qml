@@ -8,7 +8,7 @@ FluPopup {
     id: root
     implicitWidth: 480
     padding: 0
-    closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+    closePolicy: Popup.CloseOnEscape
     property var modelData: null
     property int maxPhones: 12
     property int remainingPhones: 10
@@ -580,16 +580,18 @@ FluPopup {
         root.isDownloading = false
         root.isResolutionManuallyChanged = false  // 重置标志
         root.boolStart = false  // 重置立即启动选项
-        root.remainingPhones = root.maxPhones - root.runningDeviceCount
-        if(root.remainingPhones < 0){
-            root.remainingPhones = 0
-        }
+
         root.phoneCount = Math.min(1, root.remainingPhones)
         phoneCountSpinBox.value = root.phoneCount
         macvlanToggle.checked = false
         // 获取当前主机运行中的云机数量
         if (root.modelData && root.modelData.ip && typeof treeModel !== 'undefined') {
             root.runningDeviceCount = treeModel.getRunningDeviceCount(root.modelData.ip)
+        }
+
+        root.remainingPhones = root.maxPhones - root.runningDeviceCount
+        if(root.remainingPhones < 0){
+            root.remainingPhones = 0
         }
         
         // 清空品牌和机型列表，等待镜像选择后再根据 Android 版本过滤
@@ -1185,6 +1187,19 @@ FluPopup {
                             ? Math.min(root.remainingPhones, root.maxPhones - root.runningDeviceCount)
                             : Math.max(root.remainingPhones, root.maxPhones)
                         value: root.phoneCount
+                        onValueChanged: {
+                            let max_left = Math.max(root.remainingPhones, root.maxPhones)
+                            if (root.boolStart) {
+                                max_left = Math.min(root.remainingPhones, root.maxPhones - root.runningDeviceCount)
+                            }
+
+                            if (value > max_left) {
+                                showError(qsTr("剩余可创建云机数：%1").arg(max_left))
+                                root.phoneCount = max_left
+                            } else {
+                                root.phoneCount = Math.max(value, 0)
+                            }
+                        }
                     }
 
                     FluText{

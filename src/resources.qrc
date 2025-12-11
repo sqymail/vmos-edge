@@ -1064,5 +1064,6 @@
         <file>qml/DeviceDetailPopup.qml</file>
         <file>qml/CameraStreamPopup.qml</file>
         <file>qml/CountryListModel.qml</file>
+        <file>qml/BatchInstallPopup.qml</file>
     </qresource>
 </RCC>
